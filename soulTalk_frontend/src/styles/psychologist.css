@@ -1,0 +1,54 @@
+/* psychologist.css */
+
+*{
+  margin: 0;
+  padding:0;
+  box-sizing: border-box;
+}
+.stylings {
+  margin-top: 5%; 
+  width:100vw;
+  height:100vh;
+}
+
+.psychologist-card {
+  width: 100%;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.card-img-top {
+  height: 220px;
+  object-fit: cover;
+  object-position: 2% 15%;
+}
+.card-body
+{
+  height:250px;
+}
+.psychologist-card hr {
+  margin: 10px 0;
+}
+.psychologist-card p{
+  margin-bottom: 0.2rem;
+}
+.card-body-custom {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+ }
+
+.btn-view {
+  margin-bottom: 0; /* Set margin-bottom to 0 */
+  align-self: flex-start; /* Align the button to the bottom */
+}
+.doctreview{
+  border: 1px dimgrey solid;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+}
+.revi{
+  max-height: 100px;
+  overflow-Y: visible;
+}
