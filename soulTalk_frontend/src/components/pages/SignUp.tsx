@@ -181,7 +181,7 @@ function SignUp() {
                         <input ref={inputRef} style={{ display: 'none' }} />
                       </MDBInputGroup>
                       <MDBInput wrapperClass='mb-4' label='Email' name='email' value={email} onChange={e => setEmail(e.target.value)} size='lg' id='form4' type='text' />
-                      <MDBInput wrapperClass='mb-4' label='Password' name='password' value={password} onChange={e => setPassword(e.target.value)} size='lg' id='form6' type='password' />
+                      <MDBInput wrapperClass='mb-4' label='Password' name='password' value={password} onChange={e => setPassword(e.target.value)} size='lg' id='form6' type='password' minLength={8}  />
                       <MDBInput wrapperClass='mb-4' label="Confirm Password" size="lg" id="form7" type="password" />
                       <div className='d-md-flex justify-content-start align-items-center mb-4'>
                         <h6 className="fw-bold mb-0 me-4">Gender:</h6>

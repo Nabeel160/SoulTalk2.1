@@ -1,0 +1,362 @@
+/* Add this CSS to your stylesheets */
+body{
+  overflow-x:hidden;
+}
+    .picsandcall {
+  text-align: center;
+
+    }
+
+.doctreview {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+.picsandcall img:hover {
+    transform:
+    rotate3d(1,1,1,9deg);
+  transition: transform 0.5s;
+}
+.picsandcall img{
+  border-radius: 50px;
+background: #ffffff;
+box-shadow:  20px 20px 60px #ffffff,
+             -20px -20px 60px #319898;
+  margin-bottom: 8px;
+}
+
+
+.buttons {
+  background: transparent;
+  color: #fff;
+  font-size: 17px;
+  text-transform: uppercase;
+  font-weight: 600;
+  border: none;
+  padding: 20px 30px;
+  perspective: 30rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.308);
+}
+
+.buttons::before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: 10px;
+  background: linear-gradient(320deg, rgba(0, 140, 255, 0.678), rgba(128, 0, 128, 0.308));
+  z-index: 1;
+  transition: background 3s;
+}
+
+.buttons:hover::before {
+  animation: rotate 1s;
+  transition: all .5s;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotateY(180deg);
+  }
+
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+/* Initial form state */
+.forms{
+  --col1: #fff;
+  --col2: #252325;
+  --col3: rgba(232, 213, 196, 0.9);
+  --col4: #ffffff;
+  --col5: #683363;
+  --sh: rgba(80, 80, 80, 0.35);
+  --rad: 4px;
+  --radBig: 10px;
+  border-radius: 0 0 var(--radBig) var(--radBig);
+  box-shadow: 0 0 20px var(--sh);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em 0.5em;
+  padding: 1em;
+  position: relative;
+  max-width: 75%;
+  max-height: 90px;
+  transition: background .3s ease-out, max-height .3s ease-out;
+  overflow: hidden;
+  margin-top:-30px;
+}
+
+.forms::before {
+  margin-left:20px;
+  content: ' Subscribe Psychologist ▼';
+  color: var(--col2);
+  font-size: 1.2em;
+  font-weight: 700;
+  display: grid;
+  width: calc(100% - 2em);
+  height: 60%;
+  position: absolute;
+  place-items: center;
+  z-index: 9;
+}
+
+.forms::after {
+  content: '';
+  backdrop-filter: blur(6px) grayscale(100%);
+  background: linear-gradient(-180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,.5) 70%, rgba(255, 255, 255, 0.3) 90%);
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  display: block;
+  position: absolute;
+  z-index: 8;
+}
+
+.forms::after,
+.forms::before {
+  border-radius: 0 0 var(--radBig) var(--radBig);
+  pointer-events: none;
+  transition: all .5s ease-out;
+}
+
+/* Form hover and focus */
+.forms:hover,
+.forms:focus-within {
+  max-width: 100%;
+  max-height: 470px;
+}
+
+.forms:focus-within {
+  overflow: initial;
+}
+
+.forms:hover::before,
+.forms:hover::after {
+  opacity: 0;
+}
+
+.forms:hover::after {
+  backdrop-filter: blur(0) grayscale(0%);
+}
+
+.forms header {
+  color: var(--col1);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+/* Labels and inputs UI */
+:is(.forms) label span, label input {
+  flex: 1 100%;
+  transition: all .3s ease-out;
+}
+
+:is(.forms) input, select{
+  appearance: none;
+  border: 0;
+  padding: .75em;
+  border-radius: var(--rad);
+  transition: all .3s ease-out;
+}
+
+.forms label {
+  display: flex;
+  flex-flow: row wrap;
+  color: var(--col4);
+  gap: .5em;
+}
+
+.forms input {
+  box-shadow: inset 3px 3px 1px var(--sh);
+}
+
+.forms fieldset {
+  display: flex;
+  backdrop-filter: blur(10px);
+  flex-flow: row nowrap;
+  gap: 1em;
+  position: relative;
+  transition: all .3s ease-out;
+  padding: 1rem;
+  z-index: 7;
+  border: 3px double var(--col1);
+  border-radius: var(--rad);
+}
+
+.forms fieldset label {
+  flex: 1;
+  display: flex;
+  flex-flow: row wrap;
+  font-size: .75em;
+}
+
+.sm {
+  justify-content: space-around;
+}
+
+.sm span {
+  text-align: center;
+}
+
+.forms select {
+  box-shadow: inset 3px 3px 1px var(--sh);
+  padding: .75em 1.75em .75em 0.5em;
+  position: relative;
+}
+
+.custom-select {
+  position: relative;
+}
+
+.custom-select::after {
+  position: absolute;
+  content: "";
+  top: 45%;
+  right: 5px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: var(--col5) transparent transparent transparent;
+}
+
+.forms fieldset span {
+  flex: 1 100%;
+}
+
+.forms fieldset input {
+  flex: 0 1 40px;
+}
+
+
+
+/* Form and UI valid and invalid states */
+.forms input:focus,
+.forms select:focus {
+  outline: 3px solid var(--col3);
+  outline-offset: 1px;
+}
+
+.forms input:valid:not(:focus),
+.forms select:valid:not(:focus) {
+  outline: 3px solid var(--col1);
+  outline-offset: 1px;
+}
+
+.forms input:invalid:not(:focus),
+.forms select:invalid:not(:focus) {
+  background-color: var(--col3);
+  outline: 3px solid var(--col4);
+  outline-offset: 1px;
+}
+
+.forms .message {
+  display: block;
+  opacity: 0;
+  font-size: .75em;
+  font-weight: 400;
+  transition: all .3s ease-out;
+  margin: -1rem 0 0;
+}
+
+.forms:has(:invalid) .message {
+  opacity: 1;
+  margin: .25rem 0 0 0;
+}
+
+label:has(input:invalid),
+label:has(select:invalid) {
+  color: var(--col3);
+  opacity: .8;
+}
+
+label:has(input:valid),
+label:has(select:valid) {
+  opacity: 1;
+}
+
+.form:hover:has(:focus, :active):valid .submitCard {
+  max-height: 180px;
+  opacity: 1;
+  transition: opacity 1s ease-out .5s, translate 1.3s ease-out;
+  translate: 0 100%;
+}
+
+.forms:hover:invalid {
+  transition: all .3s ease-out;
+  background-color: var(--col5);
+}
+
+.forms:hover:valid {
+  transition: all .3s ease-out;
+  background-color: var(--col1);
+}
+
+.forms:hover:valid * {
+  color: var(--col2);
+}
+
+.forms:hover:valid input,
+.forms:hover:valid select {
+  outline: 3px solid var(--col2);
+}
+
+.forms:hover:invalid fieldset {
+  border: 1px dashed var(--col3);
+}
+
+.forms:hover:valid fieldset {
+  border: 1px dashed var(--col2);
+}
+
+/* Submit block */
+.forms .submitCard {
+  display: flex;
+  justify-content: center;
+  background-color: var(--col2);
+  border-radius: 0 0 var(--rad) var(--rad);
+  bottom: 0;
+  padding: .5em;
+  opacity: 0;
+  max-height: 0;
+  translate: 0 -100%;
+  position: absolute;
+  width: calc(100% - 2em);
+  transition: all .5s ease-out .1s;
+  z-index: -1;
+}
+
+
+/* Custom Modal CSS */
+
+.custom-form {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-control {
+  border-radius: 5px;
+  border: 1px solid #bd5656;
+  padding: 8px;
+  width: 100%;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+/* You can add more custom styles as needed */

@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import {useParams} from "react-router-dom";
 import {API_URL} from "../../../Config";
-
+import "../../../styles/PsycholgistDetail.css"
 
 
 axios.defaults.xsrfCookieName = 'csrftoken';
@@ -37,7 +37,6 @@ const PsychologistDetail = () => {
     const selectedPsychologist = useSelector((state:any) => state.psychologists.selectedPsychologist);
     // State to track whether the component is open or closed
   const [isComponentOpen, setComponentOpen] = useState(false);
-
   // Function to handle button click and toggle the state
 
     const [joined, setJoined] = useState(false)
@@ -210,64 +209,83 @@ const PsychologistDetail = () => {
     <div className='stylings'>
         <div className="container" >
         <div className=" row">
-            <div className='col-md-8 mt-5'>
-                <h2><strong>Name:</strong> { selectedPsychologist.first_name } { selectedPsychologist.last_name }</h2>
-                <h2><strong>Age:</strong> { selectedPsychologist.age }</h2>
-                <h2><strong>Email:</strong> { selectedPsychologist.user.email }</h2>
-                <h2><strong>Qualfication:</strong> { selectedPsychologist.qualification }</h2>
+            <div className='col-md-8 mt-5 mx-0 info align-center'>
+                <form className="forms  ">
+                    <header>
+                        <u >DETAILS</u>
+                    </header>
+                    <label>
+                        <span>Name</span>
+                        <input placeholder={`${selectedPsychologist.first_name} ${selectedPsychologist.last_name}`}  className="input" type="text" disabled/>
+                    </label>
+                   <label>
+                        <span>Age</span>
+                        <input placeholder={selectedPsychologist.age} className="input" type="text" disabled/>
+                    </label>
+                    <label>
+                        <span>Email</span>
+                        <input placeholder={selectedPsychologist.user.email} className="input" type="text" disabled/>
+                    </label>
+                   <label>
+                        <span>Qualification</span>
+                        <input className="text-uppercase input" placeholder={selectedPsychologist.qualification}  type="text" disabled/>
+                    </label>
+                     <button className="btn buttons me-md-2" type="button"  onClick={handleCheckout} >Subscribe</button>
+                </form>
             </div>
             <div className="picsandcall col-md-4 d-flex flex-column mr-0">
             <img src={selectedPsychologist.image}/>
-            <button className="btn btn-primary me-md-2" type="button" onClick={handleClick}>Join Room</button>
+            <button className=" btn buttons me-md-2"  type="button" onClick={handleClick}>Join Room
+                </button>
             <br/>
                 {isFavorite ? (
-                <button className="btn btn-primary me-md-2" type="button" onClick={handleRemoveFavorite}>Already Favorite</button>
-                    ) : (<button className="btn btn-primary me-md-2" type="button" onClick={handleAddFavorite}>Add to Favorite</button>)}
+                <button className="btn buttons me-md-2"  type="button" onClick={handleRemoveFavorite}>Already Favorite</button>
+                    ) : (<button className="btn buttons me-md-2"  type="button" onClick={handleAddFavorite}>Add to Favorite</button>)}
                 <br/>
-            <button className="btn btn-primary me-md-2" type="button" onClick={handleCheckout} >Subscribe</button>
+
 
     </div>
 
             <hr/>
             <h3>&nbsp;&nbsp;Reviews</h3><br/>
             <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-  <button className="btn btn-primary me-md-2" type="button" onClick={handleShow}>Add Review</button>
-</div>
-<Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title onClick={handleShow}>Add Review</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <form onSubmit={handleFormSubmit}>
-        <label style={{ display: 'block', marginBottom: '10px' }}>
-        Rating:
-        <input
-          type="number"
-          min={1}
-          max={5}
-          value={rating}
-          onChange={(e) => setRating(e.target.value)}
-          required
-          style={{ marginLeft: '10px', padding: '5px', borderRadius: '4px', border: '1px solid #ccc' }}
-        />
-      </label>
-
-      <label style={{ display: 'block', marginBottom: '10px' }}>
-        Comment:
-        <textarea
-          maxLength={1000}
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          required
-          style={{ marginLeft: '10px', padding: '5px', borderRadius: '4px', border: '1px solid #ccc', width: '100%' }}
-        />
-      </label>
-          <br />
-          <button type="submit">Submit Review</button>
+  <button className="btn  buttons me-md-2"  type="button"  onClick={handleShow}>Add Review</button>
+<Modal show={show} onHide={handleClose} centered>
+      <Modal.Header closeButton>
+        <Modal.Title>Add Review</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <form onSubmit={handleFormSubmit} className="custom-form">
+          <div className="form-group">
+            <label htmlFor="rating">Rating:</label>
+            <input
+              id="rating"
+              type="number"
+              min={1}
+              max={5}
+              value={rating}
+              onChange={(e) => setRating(e.target.value)}
+              required
+              className="form-control"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="comment">Comment:</label>
+            <textarea
+              id="comment"
+              maxLength={1000}
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              required
+              className="form-control"
+              rows={5}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary" onClick={handleClose}>Submit Review</button>
         </form>
-        </Modal.Body>
-
-      </Modal>
+      </Modal.Body>
+    </Modal>
+</div>
             <div className="container-fluid revi mb-2" style={{maxHeight: "35vh",overflowY:"scroll",marginBottom:"22%"}}>
                         {selectedPsychologist.reviews.map((review:any,index:any) =>(
                            <div className="doctreview">

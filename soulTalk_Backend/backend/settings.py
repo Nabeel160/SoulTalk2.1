@@ -96,7 +96,6 @@ STRIPE_SECRET_KEY = 'sk_test_51OwIeXRupoa5NrAzkK3kaXMi83mIMO5gxUCffkqTlabqafqxBE
 STRIPE_WEBHOOK_SECRET= 'whsec_0e0c791bb0259e9e7eae25de43a823f66f9ac1e005636e8c035ea34c5562d184'
 STRIPE_PUBLIC_KEY="pk_test_51OwIeXRupoa5NrAzir5dLjpwd81Ndks1AoDx3sJNvd7L4hd3LzABXQ0nVwIINYDiixh413f5kZEDT4WhY52oITRR00heOXo6Xy"
 SITE_URL='http://127.0.0.1:3000/'
-EMAIL_BACKEND="django.core.mail.backends.console.EmailBackend"
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
@@ -218,3 +217,11 @@ LOGOUT_REDIRECT_URL = 'http://127.0.0.1:3000/'
 LOGIN_REDIRECT_URL = "http://127.0.0.1:3000"
 LOGOUT_REDIRECT_URL = 'http://127.0.0.1:3000/'
 SITE_URL = 'http://127.0.0.1:3000'
+
+#SMTP Configuration
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT='587'
+EMAIL_USE_TLS='True'
+EMAIL_HOST_USER='FarrukhT26@gmail.com'
+EMAIL_HOST_PASSWORD='agurpuswinner'

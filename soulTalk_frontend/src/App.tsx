@@ -1,4 +1,6 @@
 import React from 'react';
+import {useState,useEffect} from "react";
+import Loading from "../src/components/pages/Loading"
 import Navbar from './components/nav_components/Navbar';
 import './App.css';
 import Home from './components/pages/Home'
@@ -23,8 +25,19 @@ import Message from "../src/components/pages/Payment/Message"
 import Checkout from "../src/components/pages/Payment/Checkout"
 
 function App():JSX.Element {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate website loading delay (replace with actual loading logic)
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000); // Change the timeout duration as needed
+
+    return () => clearTimeout(timer);
+  }, []);
   return (
-    <>
+    <><div>
+      {isLoading?<Loading/>:
     <Router>
       <Navbar />
       <Routes>
@@ -48,7 +61,8 @@ function App():JSX.Element {
           <Route  path="payments/Product/:product_id" element={<Product/>}/>
           <Route  path="payments/checkout/:prod_id" element={<Checkout/>}/>
   </Routes>
-    </Router>
+    </Router>}
+      </div>
        </>
   );
 }

@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-
-
+import "../../styles/PsycholgistDetail.css";
+import "../../styles/Review.css"
+import bg from "../../assets/images/bg.png";
+import download from "../../assets/images/download.jpeg"
 const Reviews = () => {
 
     axios.defaults.xsrfCookieName = 'csrftoken';
@@ -78,77 +80,80 @@ const client = axios.create({
   };
 
   return (
-    <div style={{
-      background: "linear-gradient(to right, #ff8a00, #da1b60)",
-      minHeight: "100vh",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      padding: "20px"
-    }}>      <div style={{ textAlign: "center", marginBottom: "30px",marginTop:"5%" }}>
-    <h1 style={{ color: "#fff", fontSize: "2rem", marginBottom: "20px" }}>Reviews by our precious customers</h1>
-  </div>
+<>
+      <Modal show={show} onHide={handleClose} centered>
+      <Modal.Header closeButton>
+        <Modal.Title>Add Review</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <form onSubmit={handleFormSubmit} className="custom-form">
+          <div className="form-group">
+            <label htmlFor="rating">Rating:</label>
+            <input
+              id="rating"
+              type="number"
+              min={1}
+              max={5}
+              value={rating}
+              onChange={(e) => setRating(e.target.value)}
+              required
+              className="form-control"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="comment">Comment:</label>
+            <textarea
+              id="comment"
+              maxLength={1000}
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              required
+              className="form-control"
+              rows={5}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary" onClick={handleClose}>Submit Review</button>
+        </form>
+      </Modal.Body>
+    </Modal>
 
-  <div style={{ marginBottom: "20px",alignSelf:"flex-end" }}>
-        <button style={{ backgroundColor: "#007bff", color: "#fff", border: "none", padding: "10px 20px", cursor: "pointer", borderRadius: "5px" }} onClick={handleShow}>Add Review</button>
-      </div>
+    <header style={{backgroundImage:`url(${bg})`}} >
+        <div className="containers">
+            <div className="containers__left">
+                <h1>Read what our customers love about us</h1>
+                <p>
+                    Over 200 companies firm diverse sectors consult us to enhance the
+                    user experience of their products and services.
+                </p>
+                <p>
+                    We have helped companies increase their customer base and generate
+                    multifold revenue with our service.
+                </p>
+                <button className="btn  buttons me-md-2"  type="button"  onClick={handleShow}>Add Review</button>
+            </div>
+            <div className="containers__right">
+                 {reviews.map((review:any, index:any) => (
+                <div className="cards" key={index}>
+                    <div className="d-flex flex-column">
+                    <img src={download} alt="user"/>
 
-      <Modal show={show} onHide={handleClose}>
-  <Modal.Header closeButton style={{ backgroundColor: '#f5f5f5', color: '#333', borderBottom: '1px solid #ddd' }}>
-    <Modal.Title onClick={handleShow} style={{ cursor: 'pointer' }}>Add Review</Modal.Title>
-  </Modal.Header>
-
-  <Modal.Body style={{ padding: '20px' }}>
-    <form onSubmit={handleFormSubmit}>
-      <label style={{ display: 'block', marginBottom: '10px' }}>
-        Rating:
-        <input
-          type="number"
-          min={1}
-          max={5}
-          value={rating}
-          onChange={(e) => setRating(e.target.value)}
-          required
-          style={{ marginLeft: '10px', padding: '5px', borderRadius: '4px', border: '1px solid #ccc' }}
-        />
-      </label>
-
-      <label style={{ display: 'block', marginBottom: '10px' }}>
-        Comment:
-        <textarea
-          maxLength={1000}
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          required
-          style={{ marginLeft: '10px', padding: '5px', borderRadius: '4px', border: '1px solid #ccc', width: '100%' }}
-        />
-      </label>
-
-      <button type="submit" style={{float:"right", backgroundColor: '#007bff', color: '#fff', padding: '10px 20px', borderRadius: '4px', border: 'none', cursor: 'pointer' }}>
-        Submit Review
-      </button>
-    </form>
-  </Modal.Body>
-
-
-</Modal>
-
-
-        <div style={{ width: "100%", maxWidth: "1200px" }}>    {reviews.map((review:any, index:any) => (
-  <div className='container bg-white mb-3 mt-3 ' key={index} style={{
-    background: "#fff",
-    padding: "20px",
-    borderRadius: "10px",
-    marginBottom: "20px",
-    boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)"
-  }}>
-   <p style={{ fontWeight: "bold", marginBottom: "10px" }}>User: {review.user ? review.user.first_name : 'Unknown User'}</p>    <p>Rating: {review.rating}</p>
-    <p>Comment: {review.comment}</p>
-    <p>Added On: {review.added_on}</p>
-  </div>
-))}
+                        </div>
+                    <div className="cards__content">
+                        <span>❝</span>
+                        <div className="cards__details">
+                            <p>
+                                {review.comment}
+                            </p>
+                            <h4>- {review.user ? review.user.first_name : 'Unknown User'}</h4>
+                            <h4>{review.added_on }</h4>
+                        </div>
+                    </div>
+                </div>
+                ))}
+            </div>
         </div>
-    </div>
+        </header>
+    </>
   )
 }
 
