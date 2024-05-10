@@ -5,50 +5,86 @@
   padding:0;
   box-sizing: border-box;
 }
+
 .stylings {
-  margin-top: 5%; 
+  margin-top: 70px;
   width:100vw;
   height:100vh;
+
 }
 
-.psychologist-card {
-  width: 100%;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.card-img-top {
-  height: 220px;
-  object-fit: cover;
-  object-position: 2% 15%;
-}
-.card-body
-{
-  height:250px;
-}
-.psychologist-card hr {
-  margin: 10px 0;
-}
-.psychologist-card p{
-  margin-bottom: 0.2rem;
-}
-.card-body-custom {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
- }
 
 .btn-view {
-  margin-bottom: 0; /* Set margin-bottom to 0 */
-  align-self: flex-start; /* Align the button to the bottom */
+ width:100%;
+  height:50px;
+  margin-top: auto;
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
 }
-.doctreview{
-  border: 1px dimgrey solid;
-  border-radius: 5px;
-  padding: 5px;
-  margin: 5px;
+.btn-hover:hover
+{
+  background-color:green;
 }
-.revi{
-  max-height: 100px;
-  overflow-Y: visible;
+.flip-card {
+  background-color: transparent;
+  margin-bottom: 1px;
+  width: 250px;
+  height: 300px;
+  perspective: 1000px;
+  font-family: sans-serif;
+}
+
+.title {
+  font-size: 1.7em;
+  font-weight: 900;
+  text-align: center;
+  margin: 0;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  box-shadow: 0 8px 14px 0 rgba(0,0,0,0.2);
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border: 1px solid #1e1614;
+  border-radius: 1rem;
+}
+
+.flip-card-front {
+  background: linear-gradient(120deg, bisque 60%, rgb(255, 231, 222) 88%,
+     rgb(255, 211, 195) 40%, rgba(255, 127, 80, 0.603) 48%);
+  color: coral;
+  overflow:hidden;
+}
+
+.flip-card-back {
+  background: linear-gradient(120deg, rgb(22, 121, 171) 30%, #1679ab 88%,
+  #1679ab 40%, rgb(49, 194, 189) 78%);
+  color: white;
+  transform: rotateY(180deg);
+}
+
+.flip-card-front img {
+  width: 100%;
+  height: 100%;
+  object-fit:cover;
+  border-radius: 1rem;/* Ensure the image fills the container without distorting its aspect ratio */
 }

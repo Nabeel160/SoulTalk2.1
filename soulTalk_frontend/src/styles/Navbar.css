@@ -118,7 +118,7 @@ background-color:#1aacac
 
 
 @media screen and (max-width: 992px) {
- 
+
   .dropdown
   {
     display: none;
@@ -141,7 +141,7 @@ background-color:#1aacac
     left: -100%;
     opacity: 0.2;
     transition: all 0.5s ease;
-  
+
   }
 
   .nav-menu.active {
@@ -152,7 +152,7 @@ background-color:#1aacac
     transition: all 0.5s ease;
     z-index: 1;
   }
-  
+
 
   .nav-links, .more-dropdown {
     text-align:start;
@@ -161,7 +161,7 @@ background-color:#1aacac
     display: table;
     position: relative;
     font-size: 120%;
-    
+
   }
 
 .fa-caret-down
@@ -212,7 +212,7 @@ background-color:#1aacac
     color: #fff;
     font-size: 80%;
   }
-  
+
 
   .nav-links-mobile:hover {
     background: #fff;
@@ -226,9 +226,9 @@ background-color:#1aacac
   .nav-item
   {
     align-items: flex-start;
-    
+
   }
- 
+
 
 }
 @media screen and (min-width: 1550px)
