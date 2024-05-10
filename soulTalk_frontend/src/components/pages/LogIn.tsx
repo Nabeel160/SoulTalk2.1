@@ -138,45 +138,81 @@ function LogIn() {
     </MDBContainer>
 
     </div>
-    <footer id="footer" style={{marginBottom:"2px"}}>
-    <div className="footer-top">
-      <div className="container">
-        <div className="row">
-
-          <div className="col-lg-3 col-md-6">
-            <div className="footer-info">
-              <h3>Soul Talk</h3>
-              <p>
-                Air University <br/>
-                E-9, Islamabad, Pakistan<br/><br/>
-                <strong>Phone:</strong> +1 5589 55488 55<br/>
-                <strong>Email:</strong> info@example.com<br/>
-              </p>
-              <div className="social-links mt-3">
-              <p className="description">We provide you opportunity of treatment via online medium from our available doctors on pannel.</p>
-                <a href="/Psychologist/psychologistList" className="twitter"><i className="fa fa-twitter"></i></a>
-                <a href="/Psychologist/psychologistList" className="facebook"><i className="fa fa-facebook"></i></a>
-                <a href="/Psychologist/psychologistList" className="instagram"><i className="fa fa-instagram"></i></a>
-                <a href="/Psychologist/psychologistList" className="google-plus"><i className="fa fa-skype"></i></a>
-                <a href="/Psychologist/psychologistList" className="linkedin"><i className="fa fa-linkedin"></i></a>
-              </div>
+    <footer id="footer">
+  <div className="footer-top">
+    <div className="container">
+      <div className="row " style={{display:"flex"}}>
+        <div className="col-lg-3 col-md-2 col-sm-6">
+          <div className="footer-info">
+            <h3>Soul Talk</h3>
+            <p>
+              Air University <br/>
+              E-9, Islamabad, Pakistan<br/><br/>
+              <strong>Phone:</strong> +1 5589 55488 55<br/>
+              <strong>Email:</strong> info@soultalk.com<br/>
+            </p>
+            <p className="description">Soul Talk provides online therapy services connecting users with professional psychologists.</p>
+            <div className="social-links mt-3">
+              <a href="#" className="twitter"><i className="fa fa-twitter"></i></a>
+              <a href="#" className="facebook"><i className="fa fa-facebook"></i></a>
+              <a href="#" className="instagram"><i className="fa fa-instagram"></i></a>
+              <a href="#" className="linkedin"><i className="fa fa-linkedin"></i></a>
             </div>
           </div>
-          <div className="col-lg-4 col-md-6 footer-newsletter">
+        </div>
+
+        <div className="col-lg-6 col-md-4 d-none d-md-block">
+          <div className="footer-newsletter">
             <h4>Our Newsletter</h4>
-            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-            <form action="" method="post">
-              <input type="email" name="email"/><input type="submit" value="Subscribe"/>
+            <p>Subscribe to our newsletter for the latest updates and news.</p>
+            <form action="#" method="post">
+              <input type="email" name="email" placeholder="Enter your email"/>
+              <input type="submit" value="Subscribe"/>
             </form>
-
           </div>
+        </div>
 
+        <div className="col-lg-3 col-md-2 col-sm-6" >
+          <div className="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><Link to='/?section=home' >
+            Home
+            </Link></li>
+              <li><Link to='/?section=about-us' >
+            About-us
+            </Link></li>
+              <li><Link to='/?section=services' >
+            Services
+            </Link></li>
+              <li><Link to='/?section=awareness' >
+            Awareness
+            </Link></li>
+            <li><Link to='/?section=team' >
+            Team
+            </Link></li>
+            <li><Link to='/?section=contactUs' >
+            ContactUs
+            </Link></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div className="container">
+    <div className="row">
+      <div className="col-lg-12">
+        <div className="credits">
+          Designed by <a href="#">Friendly Developers & 128 Technologies</a>
         </div>
       </div>
     </div>
+  </div>
+</footer>
 
-
-  </footer>
   </div>
 
   );

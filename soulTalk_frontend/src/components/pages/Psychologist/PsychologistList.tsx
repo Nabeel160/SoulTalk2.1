@@ -55,6 +55,7 @@ const PsychologistList = () => {
       ))
     )}
   </div>
+
 </div>
 
   );

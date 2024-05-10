@@ -1,21 +1,19 @@
-import React,{useState,useRef, useEffect} from 'react'
-import {Link} from 'react-router-dom'
+import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Accordion from 'react-bootstrap/Accordion';
-import "../../styles/Navbar.css"
-import img from "../../assets/images/login.jpg";
+import '../../styles/Navbar.css';
+import img from '../../assets/images/login.jpg';
 import axios from 'axios';
 import LogIn from '../pages/LogIn';
-import "../../App.css"
+import '../../App.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { login,logout} from "../../reduxStore/slice/Loginslice";
-import imag from "../../assets/images/download.jpeg"
-
+import { login, logout } from '../../reduxStore/slice/Loginslice';
+import imag from '../../assets/images/download.jpeg';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
-
 
 const getCSRFToken = () => {
   const csrfCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('csrftoken='));
@@ -23,91 +21,79 @@ const getCSRFToken = () => {
 };
 
 const client = axios.create({
-  baseURL: "http://127.0.0.1:8000",
-    withCredentials: true,
-    headers: {
+  baseURL: 'http://127.0.0.1:8000',
+  withCredentials: true,
+  headers: {
     'X-CSRFToken': getCSRFToken(), // Ensure you have the getCSRFToken function
   },
 });
 
-
 function Navbar() {
-  const logouts = async() =>
-  {
-      try {
-          const response = await client.post(
-              `/api/logout/`,
-          )
-          dispatch(logout() as any)
-      }catch (error){
-          setErrorMessage("Error occured while logout!")
-      }
-
-  }
-  const isLoggedIn: any = useSelector((state:any) => state.login.isLoggedIn);
-  const dispatch=useDispatch()
-  const navigate = useNavigate()
-    const [currentUser, setCurrentUser] = useState<boolean | null>(null);
-    const [email, setEmail] = useState('');
-    const [errorMessage,setErrorMessage]=useState("");
-    const [password, setPassword] = useState('');
-    const [admin, setAdmin] = useState(false);
-
-
-    const checkAdmin = async() => {
-        let response = await client.get('/api/userview/')
-        setAdmin(response.data.is_staff)
-        console.log("It is admin:  ", response.data.is_staff)
+  const logouts = async () => {
+    try {
+      const response = await client.post(`/api/logout/`);
+      dispatch(logout() as any);
+    } catch (error) {
+      setErrorMessage('Error occured while logout!');
     }
+  };
+  const isLoggedIn: any = useSelector((state: any) => state.login.isLoggedIn);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState<boolean | null>(null);
+  const [email, setEmail] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [password, setPassword] = useState('');
+  const [admin, setAdmin] = useState(false);
 
-    useEffect(() => {
+  const checkAdmin = async () => {
+    let response = await client.get('/api/userview/');
+    setAdmin(response.data.is_staff);
+    console.log('It is admin:  ', response.data.is_staff);
+  };
 
-
-    client.get("/api/userview")
-    .then(function(res) {
-      setCurrentUser(true);
-      setErrorMessage("");
-    })
-    .catch(function(error) {
-      setCurrentUser(false);
-    });
+  useEffect(() => {
+    client
+      .get('/api/userview')
+      .then(function (res) {
+        setCurrentUser(true);
+        setErrorMessage('');
+      })
+      .catch(function (error) {
+        setCurrentUser(false);
+      });
   }, []);
+
   const popafterdelay = () => {
     // Hide the popup after a 2-second delay
     setTimeout(() => {
-      closeModal()
+      closeModal();
     }, 2000); // Delay in milliseconds (2000ms = 2 seconds)
   };
-    const submitLogin=async (e:any)=> {
-        e.preventDefault();
-        try {
-          const response= await client.post(
-            `/api/login/`,
-            {
-                email: email,
-                password: password
-            }
-        )
 
+  const submitLogin = async (e: any) => {
+    e.preventDefault();
+    try {
+      const response = await client.post(`/api/login/`, {
+        email: email,
+        password: password
+      });
 
-          // Check if the response indicates a successful login
-          if (response.status === 200) {
-            setCurrentUser(true);
-            setEmail("");
-            setPassword("");
-            navigate("/");
-            popafterdelay();
-          } else {
-            setErrorMessage('Email or password is incorrect.');
-          }
-        } catch (error) {
-          // Handle network or other errors
-          setErrorMessage('An error occurred while logging in.');
-        }
-
-
+      // Check if the response indicates a successful login
+      if (response.status === 200) {
+        setCurrentUser(true);
+        setEmail('');
+        setPassword('');
+        navigate('/');
+        popafterdelay();
+      } else {
+        setErrorMessage('Email or password is incorrect.');
+      }
+    } catch (error) {
+      // Handle network or other errors
+      setErrorMessage('An error occurred while logging in.');
     }
-
+  };
 
     const [click, setClick] = useState(false);
     const [show, setShow] = useState(false);
@@ -220,17 +206,20 @@ function Navbar() {
   </ul>
           </li>
 
-          <Accordion   defaultActiveKey="0" className="d-lg-none more-dropdown mt-1 ">
-      <Accordion.Item eventKey="0" >
-        <Accordion.Header className="accordion-header" >More</Accordion.Header>
-        <Accordion.Body >
-         <Link to="/Psychologist/psychologistList">1</Link>
-        </Accordion.Body>
-        <Accordion.Body>
-        <Link to="/Psychologist/psychologistList">1</Link>
-        </Accordion.Body>
-      </Accordion.Item>
-      </Accordion>
+      <Accordion defaultActiveKey="0" className="d-lg-none more-dropdown mt-1" style={{ color: 'red', /* add other styles */ }}>
+  <Accordion.Item eventKey="0">
+    <Accordion.Header className="accordion-header" style={{ /* add other styles */ }}>More</Accordion.Header>
+    <Accordion.Body>
+      <Link to="/Psychologist/psychologistList" style={{ textDecoration: 'none', color: 'green' }}>Psychologist</Link>
+    </Accordion.Body>
+    <Accordion.Body>
+      <Link to="/Reviews" style={{ textDecoration: 'none', color: 'orange' }}>Reviews</Link>
+    </Accordion.Body>
+    <Accordion.Body>
+      <Link to="/Forum/Forums" style={{ textDecoration: 'none', color: 'purple' }}>Forums</Link>
+    </Accordion.Body>
+  </Accordion.Item>
+</Accordion>
          <li className='nav-item'>
           {isLoggedIn ? (
         <h4 className='nav-links-mobile '>Hey user!</h4>
