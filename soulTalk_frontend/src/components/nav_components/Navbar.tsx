@@ -53,14 +53,17 @@ function Navbar() {
   };
 
   useEffect(() => {
+
     client
       .get('/api/userview')
       .then(function (res) {
         setCurrentUser(true);
         setErrorMessage('');
+        dispatch(login() as any)
       })
       .catch(function (error) {
         setCurrentUser(false);
+        dispatch(logout() as any)
       });
   }, []);
 

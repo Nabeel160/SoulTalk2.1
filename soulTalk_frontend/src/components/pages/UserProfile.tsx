@@ -75,6 +75,8 @@ function UserProfile() {
 
         }catch(error){
             console.log(error)
+            dispatch(logout())
+            navigate('/')
         }
     }
 
