@@ -26,12 +26,17 @@ const client = axios.create({
 });
 
   const [reviews, setReviews] = useState([]);
-  const [rating, setRating] = useState('');
+  const [rating, setRating] = useState<any>('');
   const [comment, setComment] = useState('');
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+      setRating('')
+      setComment('')
+      setShow(true)
+
+  };
 
   const fetchReviews = async() => {
       axios.get('http://127.0.0.1:8000/api/reviews/')
@@ -58,7 +63,7 @@ const client = axios.create({
 
   const handleFormSubmit = async (e:any) => {
     e.preventDefault();
-    
+
     try {
         // Make an API request to post the rating and comment
         await client.post(`api/submit_review/`, {
@@ -79,11 +84,22 @@ const client = axios.create({
       }
   };
 
+  const handleINPUTS = () => {
+
+  }
+   const handleratingchange = (e:any) => {
+    const inputRating = parseInt(e.target.value);
+    // Validate input to be between 1 and 5
+    if (!isNaN(inputRating) && inputRating >= 1 && inputRating <= 5) {
+      setRating(inputRating);
+    }
+  };
+
   return (
 <>
-      <Modal show={show} onHide={handleClose} centered>
+      <Modal show={show} onHide={handleClose} centered backdrop="static">
       <Modal.Header closeButton>
-        <Modal.Title>Add Review</Modal.Title>
+        <Modal.Title >Add Review</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={handleFormSubmit} className="custom-form">
@@ -95,7 +111,7 @@ const client = axios.create({
               min={1}
               max={5}
               value={rating}
-              onChange={(e) => setRating(e.target.value)}
+              onChange={handleratingchange}
               required
               className="form-control"
             />
@@ -112,7 +128,7 @@ const client = axios.create({
               rows={5}
             />
           </div>
-          <button type="submit" className="btn btn-primary" onClick={handleClose}>Submit Review</button>
+          <button type="submit" className="btn btn-primary" onClick={handleClose} disabled={!rating || !comment}>Submit Review</button>
         </form>
       </Modal.Body>
     </Modal>

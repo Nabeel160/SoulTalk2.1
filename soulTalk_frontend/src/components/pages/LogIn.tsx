@@ -14,7 +14,7 @@ import {
 }
 from 'mdb-react-ui-kit';
 import { useSelector, useDispatch } from 'react-redux';
-import { login} from "../../reduxStore/slice/Loginslice";
+import { login } from "../../reduxStore/slice/Loginslice";
 import SignUp from './SignUp';
 
 
@@ -28,11 +28,14 @@ const client = axios.create({
 
 function LogIn() {
   const dispatch = useDispatch();
+  const checkLogin = useSelector((state: any) => state?.login.isLoggedIn)
   const navigate=useNavigate();
   const [currentUser, setCurrentUser] = useState<boolean | null>(null);
     const [email, setEmail] = useState('');
     const [errorMessage,setErrorMessage]=useState("");
     const [password, setPassword] = useState('');
+
+
     useEffect(() => {
       client.get("/api/userview")
       .then(function(res) {
@@ -42,6 +45,9 @@ function LogIn() {
       .catch(function(error) {
         setCurrentUser(false);
       });
+      if(checkLogin){
+        navigate('/UserProfile')
+      }
     }, []);
 
     const submitLogin=async (e:any)=> {

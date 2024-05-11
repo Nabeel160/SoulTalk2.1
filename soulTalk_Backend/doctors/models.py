@@ -2,7 +2,7 @@ from django.db import models
 from django_userforeignkey.models.fields import UserForeignKey
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.urls import reverse
-
+from django_resized import ResizedImageField
 
 class Doctors(models.Model):
     first_name = models.CharField(max_length=50)
@@ -12,7 +12,7 @@ class Doctors(models.Model):
     address = models.CharField(max_length=1000)
     qualification = models.CharField(max_length=1000)
     user = UserForeignKey(on_delete=models.DO_NOTHING)
-    image = models.ImageField(null=True, upload_to='images')
+    image = ResizedImageField(size=[914, 927], null=True, upload_to='images')
     price = models.DecimalField(max_digits=10, decimal_places=2, default=40)
 
     def get_absolute_url(self):

@@ -45,30 +45,67 @@ function SignUp() {
   const [username, setUsername] = useState('');
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [gender, setGender] = useState('');
   const [selectedDate, setSelectedDate] = useState<string | Date | null>('');
   const [doctor, setDoctor] = useState<boolean | null>(null);
+  const [formCompleted, setFormCompleted] = useState(false); // State to track form completion
+  const [passwordMatch, setPasswordMatch] = useState(false); // State to track password match
   const datePickerRef = useRef<DatePicker>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const isLoggedIn: any = useSelector((state: any) => state.login.isLoggedIn);
   const dispatch = useDispatch()
+ const [email, setEmail] = useState<string>('');
+  const [emailError, setEmailError] = useState(false);
 
-  const sendingForward = useSelector((state: any) => state.registrations.Registration)
-  const registerData = {
-    username: '',
-    first_name: '',
-    last_name: '',
-    gender: '',
-    email: '',
-    password: '',
-    date_of_birth: '',
-    doctor: false,
-  }
-  const [regData, setRegData] = useState(registerData)
-  const [dataStored, setDataStored] = useState(false);
+  // Check if the domain part of the email is being typed correctly
+  useEffect(() => {
+    if(isLoggedIn){
+      navigate('/UserProfile')
+    }
+    const domain = email.split('@')[1];
+    const gmailDomain = 'gmail.com';
+    if (!domain) {
+      setEmailError(false);
+    } else {
+      for (let i = 0; i < domain.length; i++) {
+        if (domain[i] !== gmailDomain[i]) {
+          setEmailError(true);
+          return;
+        }
+      }
+      setEmailError(false);
+    }
 
+  }, [email]);
+
+  useEffect(() => {
+    if (
+      username.trim() !== '' &&
+      firstname.trim() !== '' &&
+      lastname.trim() !== '' &&
+      email.trim() !== '' &&
+      password.trim().length >= 8 &&
+      password === confirmPassword && // Check if passwords match
+      gender.trim() !== '' &&
+      selectedDate !== null &&
+      doctor !== null
+    ) {
+      setFormCompleted(true);
+    } else {
+      setFormCompleted(false);
+    }
+  }, [username, firstname, lastname, email, password, confirmPassword, gender, selectedDate, doctor]);
+
+  // Check if passwords match
+  useEffect(() => {
+    if (password === confirmPassword) {
+      setPasswordMatch(true);
+    } else {
+      setPasswordMatch(false);
+    }
+  }, [password, confirmPassword]);
   const handleInputClick = () => {
     if (datePickerRef.current) {
       datePickerRef.current.setOpen(true);
@@ -124,7 +161,7 @@ function SignUp() {
   }
 
   return (
-    <div className="loginmargin" style={{ marginTop: "4.7%" }}>
+   <div className="loginmargin" style={{ marginTop: "4.7%" }}>
       <MDBContainer fluid className='bg-dark signupcontainer' >
 
         <MDBRow className='d-flex justify-content-center align-items-center '>
@@ -145,13 +182,13 @@ function SignUp() {
                     <form onSubmit={e => handleformsubmit(e)}>
                       <MDBRow>
                         <MDBCol md='6'>
-                          <MDBInput wrapperClass='mb-4' label='First Name' name='first_name' value={firstname} onChange={e => setFirstname(e.target.value)} size='lg' id='form1' type='text' />
+                          <MDBInput wrapperClass='mb-4' label='First Name' name='first_name' value={firstname} onChange={e => setFirstname(e.target.value)} size='lg' id='form1' type='text' required />
                         </MDBCol>
                         <MDBCol md='6'>
-                          <MDBInput wrapperClass='mb-4' label='Last Name' name='last_name' value={lastname} onChange={e => setLastname(e.target.value)} size='lg' id='form2' type='text' />
+                          <MDBInput wrapperClass='mb-4' label='Last Name' name='last_name' value={lastname} onChange={e => setLastname(e.target.value)} size='lg' id='form2' type='text' required/>
                         </MDBCol>
                       </MDBRow>
-                      <MDBInput wrapperClass='mb-4' label='User Name' name='username' value={username} onChange={e => setUsername(e.target.value)} size='lg' id='form3' type='text' />
+                      <MDBInput wrapperClass='mb-4' label='User Name' name='username' value={username} onChange={e => setUsername(e.target.value)} size='lg' id='form3' type='text' required/>
                       <MDBInputGroup>
                         <MDBInput
                           wrapperClass='mb-4'
@@ -161,6 +198,7 @@ function SignUp() {
                           type='text'
                           value={selectedDate ? (selectedDate as Date).toLocaleDateString('en-GB') : ''}
                           onClick={handleInputClick}
+                          required
                         >
                           <DatePicker
                             selected={selectedDate as Date}
@@ -180,10 +218,11 @@ function SignUp() {
                         </MDBInput>
                         <input ref={inputRef} style={{ display: 'none' }} />
                       </MDBInputGroup>
-                      <MDBInput wrapperClass='mb-4' label='Email' name='email' value={email} onChange={e => setEmail(e.target.value)} size='lg' id='form4' type='text' />
-                      <MDBInput wrapperClass='mb-4' label='Password' name='password' value={password} onChange={e => setPassword(e.target.value)} size='lg' id='form6' type='password' minLength={8}  />
-                      <MDBInput wrapperClass='mb-4' label="Confirm Password" size="lg" id="form7" type="password" />
-                      <div className='d-md-flex justify-content-start align-items-center mb-4'>
+                        <MDBInput wrapperClass='mb-4' label='Email' name='email' value={email} onChange={e => setEmail(e.target.value)} size='lg' id='form4' type='text' required />
+                      {emailError && email.length > 0 && <div className="text-danger mb-4">Please enter a valid Gmail address.</div>}
+                      <MDBInput wrapperClass='mb-4' label='Password' name='password' value={password} onChange={e => setPassword(e.target.value)} size='lg' id='form6' type='password' minLength={8} required />
+                      <MDBInput wrapperClass='mb-4' label="Confirm Password" size="lg" id="form7" type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} required />
+                      {!passwordMatch && <div className="text-danger mb-4">Passwords do not match.</div>}     <div className='d-md-flex justify-content-start align-items-center mb-4'>
                         <h6 className="fw-bold mb-0 me-4">Gender:</h6>
                         <div>
                           <MDBRadio name='gender' id='male' value='Male' label='Male' inline checked={gender === 'M'} onChange={() => setGender('M')} />
@@ -198,9 +237,27 @@ function SignUp() {
                       </div>
                       <div className="d-flex justify-content-between pt-3">
                         <MDBBtn color='primary' size='lg'>Reset all</MDBBtn>
-                        {doctor ? (<MDBBtn className='ms-2' color='info' size='lg' type='submit'>Submit form</MDBBtn>) :
-                          (<MDBBtn className='ms-2' color='info' size='lg' onClick={handleQuestionaire}>Submit form</MDBBtn>)
-                        }
+                        {doctor ? (
+                          <MDBBtn
+                            className='ms-2'
+                            color='info'
+                            size='lg'
+                            type='submit'
+                            disabled={!formCompleted || !passwordMatch} // Disable button if form is not completed or passwords don't match
+                          >
+                            Submit form
+                          </MDBBtn>
+                        ) : (
+                          <MDBBtn
+                            className='ms-2'
+                            color='info'
+                            size='lg'
+                            onClick={handleQuestionaire}
+                            disabled={!formCompleted || !passwordMatch} // Disable button if form is not completed or passwords don't match
+                          >
+                            Submit form
+                          </MDBBtn>
+                        )}
                       </div>
                     </form>
                   </MDBCardBody>

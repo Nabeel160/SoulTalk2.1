@@ -15,7 +15,7 @@ class UserAdminConfig(UserAdmin):
         ('Personal Information', {'fields': (tuple(['first_name','last_name']), 'gender', 'date_of_birth', 'score')}),
         ('Account Details', {'fields': ['username', 'email']}),
         ('Favorite Doctors', {'fields': ['favorite']}),
-        ('Permissions', {'fields': ('is_staff', 'is_doctor')}),
+        ('Permissions', {'fields': ('is_staff', 'is_superuser', 'is_doctor')}),
     )
 
 

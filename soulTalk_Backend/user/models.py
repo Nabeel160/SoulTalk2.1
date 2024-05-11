@@ -50,6 +50,7 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
 
     is_doctor = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
     objects = CustomAccountManager()

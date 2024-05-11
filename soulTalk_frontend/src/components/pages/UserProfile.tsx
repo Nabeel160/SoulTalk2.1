@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
+import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import {logout} from "../../reduxStore/slice/Loginslice";
 import { useNavigate } from 'react-router-dom';
@@ -99,7 +100,7 @@ function UserProfile() {
             </div>*/}
  <section className="vh-100" style={{ backgroundColor: '#f4f5f7' }}>
       <MDBContainer className="py-5 h-100">
-        <MDBRow className="justify-content-center align-items-center h-100">
+        <MDBRow className="h-100">
           <MDBCol lg="8" className="mb-4 mb-lg-0">
             <MDBCard className="mb-3" style={{ borderRadius: '.5rem' }}>
               <MDBRow className="g-0">
@@ -107,7 +108,7 @@ function UserProfile() {
                   style={{ borderTopLeftRadius: '.5rem', borderBottomLeftRadius: '.5rem' }}>
                   <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
                     alt="Avatar" className="my-5" style={{ width: '80px' }} fluid />
-                  <MDBTypography tag="h5">{`${User?User.first_name:""}${User?User.last_name:""}`}</MDBTypography>
+                  <MDBTypography tag="h5">{`${User?User.first_name:""} ${User?User.last_name:""}`}</MDBTypography>
                   <MDBCardText>{User?User.username:""}</MDBCardText>
                   <MDBIcon far icon="edit mb-5" />
                 </MDBCol>
@@ -122,7 +123,7 @@ function UserProfile() {
                       </MDBCol>
                       <MDBCol size="12" className="mb-3 d-flex flex-row">
                         <MDBTypography tag="h6">Data Of Birth</MDBTypography>
-                        <MDBCardText className="text-muted text-center mx-auto">{User?User.data_of_birth:""}</MDBCardText>
+                        <MDBCardText className="text-muted text-center mx-auto">{User?User.date_of_birth:""}</MDBCardText>
                       </MDBCol>
                     </MDBRow>
 
@@ -145,6 +146,12 @@ function UserProfile() {
           </MDBCol>
         </MDBRow>
       </MDBContainer>
+
+     {User?User.favorite.map((favorites: any, index:any) => (
+
+             <h1 key={favorites.id}><Link to={`/Psychologist/PsychologistDetail/${favorites.id}`}>{favorites.first_name}</Link></h1>
+
+     )):""}
     </section>
             </>
     )
