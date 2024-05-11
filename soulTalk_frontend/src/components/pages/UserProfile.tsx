@@ -3,7 +3,8 @@ import axios from "axios"
 import { useSelector, useDispatch } from 'react-redux';
 import {logout} from "../../reduxStore/slice/Loginslice";
 import { useNavigate } from 'react-router-dom';
-
+import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBTypography, MDBIcon } from 'mdb-react-ui-kit';
+import "../../styles/UserProfile.css"
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -82,7 +83,8 @@ function UserProfile() {
 
 
     return(
-        <div style={{marginTop: '10.7%'}}>
+        <>
+            {/*<div style={{marginTop: '10.7%'}}>
             <div style={{display: 'inline'}}>
             <p style = {{fontSize: '20px', fontWeight: '5px'}}>First Name: {User ? User.first_name : ''} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Last Name: {User ? User.last_name : ''}</p>
             <p style = {{fontSize: '20px', fontWeight: '5px'}}>Username: {User ? User.username : 'error'}</p>
@@ -94,7 +96,57 @@ function UserProfile() {
                 <button className='btn btn-danger' onClick={logouts}>log Out</button>
 
             </div>
-            </div>
+            </div>*/}
+ <section className="vh-100" style={{ backgroundColor: '#f4f5f7' }}>
+      <MDBContainer className="py-5 h-100">
+        <MDBRow className="justify-content-center align-items-center h-100">
+          <MDBCol lg="8" className="mb-4 mb-lg-0">
+            <MDBCard className="mb-3" style={{ borderRadius: '.5rem' }}>
+              <MDBRow className="g-0">
+                <MDBCol md="4" className="gradient-custom text-center text-white"
+                  style={{ borderTopLeftRadius: '.5rem', borderBottomLeftRadius: '.5rem' }}>
+                  <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                    alt="Avatar" className="my-5" style={{ width: '80px' }} fluid />
+                  <MDBTypography tag="h5">{`${User?User.first_name:""}${User?User.last_name:""}`}</MDBTypography>
+                  <MDBCardText>{User?User.username:""}</MDBCardText>
+                  <MDBIcon far icon="edit mb-5" />
+                </MDBCol>
+                <MDBCol md="8">
+                  <MDBCardBody className="p-4 d-flex flex-column">
+                    <MDBTypography className="text-center" tag="h4"><strong>Information</strong></MDBTypography>
+                    <hr className="mt-0 mb-4" />
+                    <MDBRow className="pt-1 d-flex flex-column">
+                      <MDBCol size="12" className="mb-3 d-flex flex-row">
+                        <MDBTypography tag="h6">Email</MDBTypography>
+                        <MDBCardText className="text-muted text-center mx-auto">{User?User.email:""}</MDBCardText>
+                      </MDBCol>
+                      <MDBCol size="12" className="mb-3 d-flex flex-row">
+                        <MDBTypography tag="h6">Data Of Birth</MDBTypography>
+                        <MDBCardText className="text-muted text-center mx-auto">{User?User.data_of_birth:""}</MDBCardText>
+                      </MDBCol>
+                    </MDBRow>
+
+                    <MDBRow className="pt-1 d-flex flex-column">
+                      <MDBCol size="12" className="mb-3 d-flex flex-row">
+                        <MDBTypography tag="h6">Gender</MDBTypography>
+                        <MDBCardText className="text-muted text-center mx-auto">{User?User.gender:""}</MDBCardText>
+                      </MDBCol>
+                      <MDBCol size="10" className="mb-3 d-flex flex-row">
+                        <MDBTypography tag="h6">Depression Level</MDBTypography>
+                        <MDBCardText className="text-muted text-center mx-auto">{depression}</MDBCardText>
+                      </MDBCol>
+                    </MDBRow>
+<button className='btn btn-danger mb-5 mt-3' onClick={logouts}>log Out</button>
+
+                  </MDBCardBody>
+                </MDBCol>
+              </MDBRow>
+            </MDBCard>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+    </section>
+            </>
     )
 }
 
