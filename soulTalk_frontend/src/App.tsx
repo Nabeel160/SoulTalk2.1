@@ -54,7 +54,7 @@ function App():JSX.Element {
         <Route path="/Reviews" Component={Reviews}/>
         <Route path="/Forum/Forums" Component={Forums}/>
         <Route path="Forum/SpecificForum/:id" Component={SpecificForum}/>
-        <Route path="/chat" element={<Chatroom/>} />
+        <Route path="/chat/:channel_name" element={<Chatroom/>} />
         <Route path="/UserProfile" Component={UserProfile} />
         <Route path="/Questionaire" Component={Questionaire} />
          <Route  path='payments/success' element={<Message/>}/>

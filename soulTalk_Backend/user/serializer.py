@@ -30,7 +30,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = NewUser
-        fields = ['username', 'first_name', 'last_name', 'email', 'favorite', 'date_of_birth', 'gender', 'score', 'is_staff']
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'favorite', 'date_of_birth', 'gender', 'score', 'is_staff']
 
     def get_favorite(self, instance):
         from doctors.serializer import DoctorsSerializerFav

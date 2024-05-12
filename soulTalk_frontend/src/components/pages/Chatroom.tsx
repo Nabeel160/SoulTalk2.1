@@ -32,39 +32,52 @@ const Chatroom: React.FC = () => {
   var msg = "";
 
 
+
   useEffect(() => {
 
     const fetchOldMessages = async () => {
       try {
         const response = await client.get('/api/messages/'); // Adjust the API endpoint accordingly
-        const formattedMesasge = response.data.map((msg: any) => ({
-          content: msg.content,
-          user: msg.user.username
-        }))
-        setReceivedMessages(formattedMesasge);
+        const formattedMessage = response.data
+          .filter((msg: any) => msg.room == channel_name) // Filter out messages with "hi" content
+            .map((msg: any) => ({
+           content: msg.content,
+            user: msg.user.username
+  }));
+        setReceivedMessages(formattedMessage);
       } catch (error) {
         console.error('Error fetching old messages:', error);
       }
     };
 
-
     // Fetch old messages when the component mounts
     fetchOldMessages();
 
 
-    const ws = new WebSocket('ws://127.0.0.1:8000/ws/chat/');
+    function getChatroomNameFromURL(): string | null {
+    const match = window.location.pathname.match(/^\/chat\/([^\/]+)/);
+    return match ? match[1] : null;
+}
+  const channel_name = getChatroomNameFromURL();
+
+
+    const ws = new WebSocket(`ws://127.0.0.1:8000/ws/chat/${channel_name}`);
     setSocket(ws);
 
     ws.onmessage = event => {
+      console.log("MESSAGE SENT")
       const newMessage: Message = JSON.parse(event.data);
       setReceivedMessages(prevMessages => [...prevMessages, newMessage]);
+      console.log(receivedMessages)
     };
 
+    setInterval(() => {
+      fetchOldMessages()
+    }, 1000)
     return () => {
       ws.close();
     };
   }, []);
-
 
 
   const sendMessage = () => {

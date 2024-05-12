@@ -5,6 +5,7 @@ import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import {useParams} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {API_URL} from "../../../Config";
 import "../../../styles/PsycholgistDetail.css"
 
@@ -38,7 +39,8 @@ const PsychologistDetail = () => {
     // State to track whether the component is open or closed
   const [isComponentOpen, setComponentOpen] = useState(false);
   // Function to handle button click and toggle the state
-
+    const navigate = useNavigate()
+    const [user, setUser] = useState<any>()
     const [joined, setJoined] = useState(false)
     const [isFavorite, setIsFavorite] = useState<boolean | null>(null)
     const [data, setData] = useState<any>()
@@ -55,7 +57,7 @@ const PsychologistDetail = () => {
     const fetchUser = async () => {
         try{
             const response = await client.get("/api/userview/");
-
+            setUser(response.data.user)
             const favorites = response.data.user.favorite || [];
             favorites.forEach((favorite: any) => {
       if (favorite.id === selectedPsychologist.id) {
@@ -72,7 +74,7 @@ const PsychologistDetail = () => {
 
         console.log("USE EFFECT WORKIN")
         fetchUser()
-    })
+    }, [])
 
 
     const getDoctor = async () => {
@@ -202,7 +204,9 @@ const PsychologistDetail = () => {
 
     };
 
-
+    const chat = () => {
+        navigate(`/chat/${selectedPsychologist.id}${user.id}`)
+    }
 
 
   return (
@@ -242,6 +246,8 @@ const PsychologistDetail = () => {
                 <button className="btn buttons me-md-2"  type="button" onClick={handleRemoveFavorite}>Already Favorite</button>
                     ) : (<button className="btn buttons me-md-2"  type="button" onClick={handleAddFavorite}>Add to Favorite</button>)}
                 <br/>
+
+                <button className="btn buttons me-md-2"  type="button" onClick={chat}>Chat</button>
 
 
     </div>

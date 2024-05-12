@@ -1,32 +1,33 @@
 #chatroom/consumers.py
 import json
+import logging
 
 from channels.generic.websocket import AsyncWebsocketConsumer
 from .models import Message
 from channels.db import database_sync_to_async
 from asgiref.sync import sync_to_async
 
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 class ChatConsumer(AsyncWebsocketConsumer):
+
+
     async def connect(self):
         self.messages = []
+        self.channel_name = self.scope['url_route']['kwargs']['channel_name']
+        self.room_group_name = "chat_%s" % self.channel_name
         await self.accept()
         await self.send_all_messages()
-        await self.channel_layer.group_add("chatroom", self.channel_name)
-
-
-
+        await self.channel_layer.group_add(self.room_group_name, self.channel_name)
+        logger.info("Connected to room group: %s", self.room_group_name)
 
     async def disconnect(self, close_code):
-        await self.channel_layer.group_discard("chatroom", self.channel_name)
+        await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
 
     async def receive(self, text_data):
         await self.save_message(text_data)
-
-
-    async def chat_message(self, event):
-        # Send the received message to the client
-        text_data = event['text']
-        await self.send(text_data=text_data)
 
     async def save_message(self, text_data):
         # Parse the received JSON data
@@ -39,11 +40,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # Save the message to the database
         if content and user:
             # Use database_sync_to_async to save the message asynchronously
-            await self.create_message(user, content)
+            await self.create_message(user, content, self.channel_name)
             username = user.username
-
+            room = self.room_group_name
+            logger.info("Connected to room group: %s", room)
         await self.channel_layer.group_send(
-            "chatroom",
+            self.room_group_name,
             {
                 "type": "chat.message",
                 "text": json.dumps({
@@ -51,12 +53,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     "user": username
                 }),
             }
+
         )
+        logger.info("Connected to room group: %s", room)
 
     @database_sync_to_async
-    def create_message(self, user, content):
+    def create_message(self, user, content, room):
             # Create a new Message object with the provided user and content
-            return Message.objects.create(user=user, content=content)
+            return Message.objects.create(user=user, content=content, room=room)
 
     @database_sync_to_async
     def send_all_messages(self):
