@@ -1,0 +1,26 @@
+.video-room-container {
+margin-top:3rem;
+    padding: 20px;
+    height:100vh;
+    background-size:cover;
+}
+
+.controls {
+    margin-bottom: 20px;
+}
+
+.controls button {
+    margin-right: 10px;
+}
+
+.video-players {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.video-player {
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}

@@ -54,6 +54,7 @@ class UpdateProfile(APIView):
 class UserRegister(APIView):
     permission_classes = (permissions.AllowAny,)
 
+
     def post(self,request):
         clean_data = custom_validations(request.data)
         serializer = UserRegisterSerializer(data=clean_data)
@@ -62,6 +63,7 @@ class UserRegister(APIView):
             if user:
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class UserLogin(APIView):
