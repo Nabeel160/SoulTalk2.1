@@ -36,6 +36,17 @@ class AddFavorite(APIView):
         return Response({'message': 'Doctor favorited successfully'}, status=status.HTTP_200_OK)
 
 
+class UpdateProfile(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (SessionAuthentication,)
+
+
+    def post(self, request):
+        user = request.user
+
+        pass
+
+
 class UserRegister(APIView):
     permission_classes = (permissions.AllowAny,)
     def post(self,request):

@@ -40,7 +40,7 @@ function UserProfile() {
   {
       try {
           const response = await client.post(
-              `/api/logout/`,
+              '/api/logout/',
           )
           dispatch(logout() as any)
           navigate('/')
@@ -136,7 +136,7 @@ function UserProfile() {
                       </MDBCol>
                       <MDBCol size="10" className="mb-3 d-flex flex-row">
 
-                          {User.is_doctor && (
+                          {User && User.is_doctor && (
                              <>
                              <MDBTypography tag="h6">Depression Level</MDBTypography>
                                  <MDBCardText className="text-muted text-center mx-auto">{depression}</MDBCardText>
