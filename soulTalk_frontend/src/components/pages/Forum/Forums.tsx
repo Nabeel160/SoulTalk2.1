@@ -3,10 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setThreads,selectThreads } from '../../../reduxStore/slice/ForumSlice';
 import { Link } from 'react-router-dom';
 import imag from "../../../assets/images/download.jpeg";
+import bg from "../../../assets/images/bg1.jpg"
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
-
+import "../../../styles/Forum.css"
 
 
 axios.defaults.xsrfCookieName = 'csrftoken';
@@ -79,7 +80,7 @@ const handleFormSubmit = async (e:any) => {
 
 
   return (
-    <div style={{ background: "linear-gradient(to right, #ff8a00, #da1b60)", height: "100vh",margin:"0px",padding:"0px" }}>
+    <div className="header" style={{ backgroundImage:`url(${bg})`, height: "100vh",margin:"0px",padding:"0px" }}>
     <div className='forums-header d-flex justify-content-center mt-5'>
     <h1>Forums</h1>
   </div><div className="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -122,7 +123,7 @@ const handleFormSubmit = async (e:any) => {
       <div className='mt-3 '>
   {forums.map((forum:any) => (
     <div
-      className='container-fluid d-flex flex-row bg-white '
+      className='container-fluid d-flex flex-row bg-dark-subtle '
       key={forum.id}
       style={{
         borderBottom: '1px solid #e0e0e0', // Add a bottom border for separation

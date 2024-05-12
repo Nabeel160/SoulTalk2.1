@@ -1,3 +1,6 @@
+.body{
+  background-size: cover;
+}
 .scard {
   width: 70vw;
   background-color: #f0f0f0; /* Changed background color */

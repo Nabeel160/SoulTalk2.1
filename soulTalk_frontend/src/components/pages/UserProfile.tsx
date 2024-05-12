@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import {logout} from "../../reduxStore/slice/Loginslice";
 import { useNavigate } from 'react-router-dom';
+import bg from "../../assets/images/bg1.jpg"
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBTypography, MDBIcon } from 'mdb-react-ui-kit';
 import "../../styles/UserProfile.css"
 
@@ -91,23 +92,11 @@ function UserProfile() {
 
     return(
         <>
-            {/*<div style={{marginTop: '10.7%'}}>
-            <div style={{display: 'inline'}}>
-            <p style = {{fontSize: '20px', fontWeight: '5px'}}>First Name: {User ? User.first_name : ''} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Last Name: {User ? User.last_name : ''}</p>
-            <p style = {{fontSize: '20px', fontWeight: '5px'}}>Username: {User ? User.username : 'error'}</p>
-                <p style = {{fontSize: '20px', fontWeight: '5px'}}>Email: {User ? User.email : 'error'}</p>
-                <p style = {{fontSize: '20px', fontWeight: '5px'}}>Date of birth: {User ? User.date_of_birth : 'error'}</p>
-                <p style = {{fontSize: '20px', fontWeight: '5px'}}>Gender: {User ? User.gender : 'error'}</p>
-                <p style = {{fontSize: '20px', fontWeight: '5px'}}>Depression level: {depression}</p>
 
-                <button className='btn btn-danger' onClick={logouts}>log Out</button>
-
-            </div>
-            </div>*/}
- <section className="vh-100" style={{ backgroundColor: '#f4f5f7' }}>
-      <MDBContainer className="py-5 h-100">
+ <section className="vh-100" style={{ backgroundImage:`url(${bg})` }}>
+      <MDBContainer className="mt-2 h-100">
         <MDBRow className="h-100">
-          <MDBCol lg="8" className="mb-4 mb-lg-0">
+          <MDBCol lg="10" className="mb-4 mb-lg-0">
             <MDBCard className="mb-3" style={{ borderRadius: '.5rem' }}>
               <MDBRow className="g-0">
                 <MDBCol md="4" className="gradient-custom text-center text-white"

@@ -2,6 +2,7 @@ import React from "react"
 import "../../styles/UpdateProfile.css"
 import {useEffect, useState} from "react";
 import axios from "axios";
+import bg from "../../assets/images/bg1.jpg"
 import {useNavigate} from "react-router-dom";
 import {responsiveFontSizes} from "@mui/material";
 
@@ -80,10 +81,9 @@ const UpdateProfile =()=>
     }, [])
 
     return (
-     <>
+     <div className="header" style={{backgroundImage:`url(${bg})`}}>
          <form className="form">
-             <p className="title">Register </p>
-             <p className="message">Signup now and get full access to our app. </p>
+
              <div className="flex">
                  <label>
                      <input placeholder="" value={first_name} type="text" className="input" onChange={e=>setfirst_name(e.target.value)} required/>
@@ -109,7 +109,7 @@ const UpdateProfile =()=>
              <button className="submit" onClick={UpdatingProfile}>Submit</button>
 
          </form>
-     </>
+     </div>
     )
 };
 

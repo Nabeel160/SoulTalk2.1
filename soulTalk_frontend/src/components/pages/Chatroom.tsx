@@ -4,6 +4,7 @@ import React, { useState, useEffect,useRef } from 'react';
 import bg from "../../assets/images/download.jpeg"
 import axios from 'axios';
 import "../../styles/PublicChatroom.css"
+import bg1 from "../../assets/images/bg1.jpg"
 import {logout} from "../../reduxStore/slice/Loginslice";
 interface Message {
   content: string;
@@ -115,7 +116,7 @@ const Chatroom: React.FC = () => {
 
   return (
       <>
-    <div className="d-flex justify-content-center align-items-center   mt-5">
+    <div className=" body d-flex justify-content-center align-items-center  " style={{backgroundImage:`url(${bg1})`}}>
 
       <div className="scard">
         <div className="chat-header">Chat</div>

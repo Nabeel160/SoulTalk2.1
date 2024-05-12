@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import "../../styles/PsycholgistDetail.css";
 import "../../styles/Review.css"
-import bg from "../../assets/images/bg.png";
+import bg from "../../assets/images/bg1.jpg";
 import download from "../../assets/images/download.jpeg"
 const Reviews = () => {
 

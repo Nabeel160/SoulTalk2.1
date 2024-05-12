@@ -5,6 +5,9 @@ import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import imag from "../../../assets/images/download.jpeg";
+import bg from "../../../assets/images/bg1.jpg"
+import "../../../styles/Forum.css"
+
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
@@ -66,12 +69,12 @@ const SpecificForum = () => {
 
   return (
     <div style={{
-      background: "linear-gradient(to right, #ff8a00, #da1b60)",
+     backgroundImage:`url(${bg})`,
       minHeight: "100vh",
       padding: "20px",
       color: "#fff",
       fontFamily: "'Arial', sans-serif"
-    }}>
+    }} className='header'>
        <div style={{ textAlign: "center", marginBottom: "30px",marginTop:"5%" }}>
         <h1>{selectThread.subject}</h1>
       </div>
