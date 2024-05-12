@@ -4,18 +4,18 @@
     box-sizing: border-box;
   }
   .body{
-    background:conic-gradient(rgb(59, 13, 223),rgb(209, 105, 193),rgb(8, 202, 255));
-    display:flex;
+        display:flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     min-height: 100vh;
     color:white;
+    background-size:cover;
+    background-repeat:no-repeat;
   }
   .apps
   {
-    margin-left: 20%;
-    margin-top: 20%;
+    margin-left: 5%;
     border: 1px solid green;
     background-color: #252d4a;
    width:50%;
@@ -23,9 +23,8 @@
     border-radius: 15px;
     padding:20px;
     box-shadow: 10px 10px 42px 0px rgba(0,0,0,0.75);
-    display: flex;
-    flex-direction: row;
-    margin-top: 5%;
+
+    margin-top: 20vh;
   }
   .scores-sections
   {

@@ -7,7 +7,7 @@ import {setData} from "../../reduxStore/slice/RegistrationSlice";
 import Result from './Result';
 import {login} from "../../reduxStore/slice/Loginslice";
 import axios from "axios";
-
+import bg from "../../assets/images/bg1.jpg"
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -109,9 +109,8 @@ function Quiz() {
   }
 
   return (
-    <div className='body'>
-      <h1>Gurpus Quiz App</h1>
-      <div className="apps">
+    <div className='body' style={{backgroundImage:`url(${bg})`}}>
+      <div className="apps ">
         {showResults ? (
             <button className='btn btn-success' onClick={handleSubmit}>Complete registeration</button>
         ) : (
