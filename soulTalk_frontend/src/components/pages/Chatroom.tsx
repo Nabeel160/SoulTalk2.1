@@ -1,8 +1,10 @@
 // chatroom-frontend/src/Chatroom.tsx
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
+import bg from "../../assets/images/download.jpeg"
 import axios from 'axios';
-
+import "../../styles/PublicChatroom.css"
+import {logout} from "../../reduxStore/slice/Loginslice";
 interface Message {
   content: string;
   user: string;
@@ -29,7 +31,23 @@ const Chatroom: React.FC = () => {
   const [message, setMessage] = useState('');
   const [receivedMessages, setReceivedMessages] = useState<Message[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [User,setUser]=useState<any>("")
+    const chatWindowRef = useRef<HTMLUListElement>(null);
   var msg = "";
+
+ const fetchUser = async () => {
+
+            let response = await client.get('api/userview/')
+            const user = await response.data.user
+            setUser(user)
+            console.log("User: ", response.data.user.username)
+
+
+    }
+
+    useEffect(() => {
+        fetchUser()
+    }, [])
 
 
 
@@ -42,9 +60,13 @@ const Chatroom: React.FC = () => {
           .filter((msg: any) => msg.room == channel_name) // Filter out messages with "hi" content
             .map((msg: any) => ({
            content: msg.content,
-            user: msg.user.username
+            user: msg.user.username,
+                time:msg.timestamp
   }));
         setReceivedMessages(formattedMessage);
+        if (chatWindowRef.current) {
+          chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
+        }
       } catch (error) {
         console.error('Error fetching old messages:', error);
       }
@@ -69,6 +91,9 @@ const Chatroom: React.FC = () => {
       const newMessage: Message = JSON.parse(event.data);
       setReceivedMessages(prevMessages => [...prevMessages, newMessage]);
       console.log(receivedMessages)
+         if (chatWindowRef.current) {
+        chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
+      }
     };
 
     setInterval(() => {
@@ -89,18 +114,38 @@ const Chatroom: React.FC = () => {
   };
 
   return (
-    <div>
-      <br/>
-      <br/>
-      <br/>
-      <input type="text" value={message} id="msgTxt" onChange={e => setMessage(e.target.value)} />
-      <button onClick={sendMessage}>Send</button>
-      <div>{receivedMessages.map((msg, index) => (
-          <div key={index}>
-            <p><strong>{msg.user}: </strong>{msg.content}</p>
-          </div>
-        ))}</div>
+      <>
+    <div className="d-flex justify-content-center align-items-center   mt-5">
+
+      <div className="scard">
+        <div className="chat-header">Chat</div>
+        <div className="chat-window">
+          <ul className="message-list">
+            {receivedMessages.map((msg, index) => (
+        <div key={index} className={`message ${msg.user === User.username? 'sent' : 'received'}`} >
+
+                <img src={bg} className="imgs rounded-circle mx-2 mt-1"/>
+
+
+            <div className='con'>
+                <p className="magic "> <strong>{msg.user}</strong></p>
+                <p className="text-left"> <strong>{msg.content}</strong></p> </div>
+              </div>
+        ))}
+          </ul>
+        </div>
+        <div className="chat-input">
+          <input type="text" value={message} id="msgTxt" onKeyPress={(e) => {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    }} onChange={e => setMessage(e.target.value)}  className="message-input" placeholder="Type your message here"/>
+            <button type="button" onClick={sendMessage} className="send-button">Send</button>
+        </div>
+      </div>
+
     </div>
+        </>
   );
 };
 

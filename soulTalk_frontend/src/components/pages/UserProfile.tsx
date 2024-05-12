@@ -148,7 +148,7 @@ function UserProfile() {
                                 )}
                       </MDBCol>
                     </MDBRow>
-                      <button className='btn btn-danger mb-5 mt-3' onClick={UpdateProfile}>Update Profle</button>
+                      <button className='btn btn-danger ' onClick={UpdateProfile}>Update Profle</button>
 <button className='btn btn-danger mb-5 mt-3' onClick={logouts}>log Out</button>
 
                   </MDBCardBody>

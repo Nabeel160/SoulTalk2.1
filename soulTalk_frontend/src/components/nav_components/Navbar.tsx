@@ -206,7 +206,9 @@ function Navbar() {
     <li className="dropdowns-items"><Link className="dropdown-item "  to="/Psychologist/psychologistList">Psychologist</Link></li>
     <li className="dropdowns-items"><Link className="dropdown-item"  to="/Reviews">Reviews</Link></li>
     <li className="dropdowns-items"><Link className="dropdown-item"    to="/Forum/Forums">Forums</Link></li>
-  </ul>
+   <li className="dropdowns-items"><Link className="dropdown-item"    to="/chat/public">Chat Toom</Link></li>
+
+            </ul>
           </li>
 
       <Accordion defaultActiveKey="0" className="d-lg-none more-dropdown mt-1" style={{ color: 'red', /* add other styles */ }}>

@@ -176,7 +176,7 @@ function SignUp() {
                   <MDBCardImage style={{ marginTop: "4.7%", marginLeft: "1%", width: "130%" }} src={img} alt="Sample photo" className="rounded-start signupimage" fluid />
                 </MDBCol>
 
-                <MDBCol md='6' >
+                <MDBCol >
 
                   <MDBCardBody className='text-black d-flex flex-column '>
                     <h3 className="mb-5 text-uppercase text-center fw-bold">Soul_Talk registration form</h3>
