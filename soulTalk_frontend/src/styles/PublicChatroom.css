@@ -1,0 +1,105 @@
+.card {
+  width: 70vw;
+  background-color: #f0f0f0; /* Changed background color */
+  border: none; /* Removed border */
+  border-radius: 10px; /* Increased border radius */
+  margin-top: 3rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Updated box shadow */
+}
+
+.chat-header {
+  background-color: #075e54; /* WhatsApp green color */
+  color: #fff;
+  padding: 10px;
+  font-size: 18px;
+  border-top-left-radius: 10px; /* Match border radius of card */
+  border-top-right-radius: 10px; /* Match border radius of card */
+}
+
+.chat-window {
+  height: 60vh;
+  overflow-y: auto; /* Changed to auto to allow scrolling */
+  padding: 10px; /* Added padding */
+}
+
+.message-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chat-input {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.message-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 20px; /* Rounded input */
+  background-color: #fff; /* White background */
+}
+
+.send-button {
+  border: none;
+  outline: none;
+  background-color: #075e54; /* WhatsApp green color */
+  color: #fff;
+  font-size: 14px;
+  padding: 8px 20px; /* Adjusted padding */
+  border-radius: 20px; /* Rounded button */
+  cursor: pointer;
+  margin-left: 10px; /* Added margin */
+}
+
+.send-button:hover {
+  background-color: #128c7e; /* Darker shade of green */
+}
+.message {
+  margin: 10px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.message p {
+  margin: 0;
+}
+
+.message.received {
+  display:flex;
+  flex-direction:row;
+  background-color: #ded4d4;
+  text-align: left;
+  padding:5px;
+
+  max-width: 80%;
+}
+
+.message.sent {
+  display:flex;
+  margin-left: 20%;
+  max-width: 80%;
+  padding:5px;
+  flex-direction:row-reverse;
+  background-color: #88d78d;
+  color: white;
+  text-align: right;
+}
+.message.sent .magic{
+  display:none;
+  color: #bd5656;
+}
+.magic
+{
+  color: #319898;
+}
+.imgs{
+  height:1.2rem;
+  width:1.5rem;
+
+}
