@@ -6,7 +6,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from channels.routing import ProtocolTypeRouter
 from doctors.views import DoctorsView, getToken, DocReviewCreation
-from user.views import UserViewSet,check_email_uniqueness, UserRegister, UserLogin, UserLogout, UserView, AddFavorite, RemoveFavorite, UpdateProfile
+from user.views import UserViewSet, UserRegister, UserLogin, UserLogout, UserView, AddFavorite, RemoveFavorite, UpdateProfile
 from review.views import ReviewsView, ReviewCreation
 from forums.views import PostView, PostCreation, ReplyCreation
 from doctors.views import CreateCheckOutSession, stripe_webhook_view
