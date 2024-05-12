@@ -8,8 +8,6 @@ from channels.db import database_sync_to_async
 from asgiref.sync import sync_to_async
 
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 class ChatConsumer(AsyncWebsocketConsumer):
 
@@ -21,7 +19,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.accept()
         await self.send_all_messages()
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)
-        logger.info("Connected to room group: %s", self.room_group_name)
+
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
@@ -43,7 +41,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             await self.create_message(user, content, self.channel_name)
             username = user.username
             room = self.room_group_name
-            logger.info("Connected to room group: %s", room)
+
         await self.channel_layer.group_send(
             self.room_group_name,
             {
@@ -55,7 +53,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             }
 
         )
-        logger.info("Connected to room group: %s", room)
+
 
     @database_sync_to_async
     def create_message(self, user, content, room):

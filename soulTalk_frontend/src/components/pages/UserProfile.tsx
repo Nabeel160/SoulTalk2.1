@@ -135,8 +135,13 @@ function UserProfile() {
                         <MDBCardText className="text-muted text-center mx-auto">{User?User.gender:""}</MDBCardText>
                       </MDBCol>
                       <MDBCol size="10" className="mb-3 d-flex flex-row">
-                        <MDBTypography tag="h6">Depression Level</MDBTypography>
-                        <MDBCardText className="text-muted text-center mx-auto">{depression}</MDBCardText>
+
+                          {User.is_doctor && (
+                             <>
+                             <MDBTypography tag="h6">Depression Level</MDBTypography>
+                                 <MDBCardText className="text-muted text-center mx-auto">{depression}</MDBCardText>
+                                </>
+                                )}
                       </MDBCol>
                     </MDBRow>
 <button className='btn btn-danger mb-5 mt-3' onClick={logouts}>log Out</button>

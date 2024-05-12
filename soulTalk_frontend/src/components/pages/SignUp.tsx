@@ -144,6 +144,7 @@ function SignUp() {
         password: password,
         date_of_birth: formattedDate,
         is_doctor: doctor,
+        score: null
       });
 
       if (response.status >= 200 && response.status < 300) {
