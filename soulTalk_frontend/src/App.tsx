@@ -23,6 +23,7 @@ import Questionaire from './components/pages/Questionaire'
 import Product from "../src/components/pages/Payment/Product"
 import Message from "../src/components/pages/Payment/Message"
 import Checkout from "../src/components/pages/Payment/Checkout"
+import UpdateProfile from "../src/components/pages/UpdateProfile"
 
 function App():JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
@@ -60,6 +61,7 @@ function App():JSX.Element {
          <Route  path='payments/success' element={<Message/>}/>
           <Route  path="payments/Product/:product_id" element={<Product/>}/>
           <Route  path="payments/checkout/:prod_id" element={<Checkout/>}/>
+        <Route path="/UpdateProfile" element={<UpdateProfile/>}/>
   </Routes>
     </Router>}
       </div>

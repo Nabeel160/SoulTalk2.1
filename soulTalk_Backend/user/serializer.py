@@ -4,6 +4,12 @@ from rest_framework import serializers
 from .models import NewUser
 
 
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NewUser
+        fields = ['first_name', 'last_name', 'username', 'email']
+
+
 class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewUser

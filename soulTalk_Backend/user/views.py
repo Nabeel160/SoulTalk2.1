@@ -3,11 +3,11 @@ from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import NewUser
-from .serializer import UserSerializer, UserRegisterSerializer, UserLoginSerializer
+from .serializer import UserSerializer, UserRegisterSerializer, UserLoginSerializer, UserUpdateSerializer
 from django.contrib.auth import get_user_model, login, logout
 from rest_framework import permissions, status
 from .validations import custom_validations, validate_email, validate_password, validate_username
-
+from django.http import JsonResponse
 from django.shortcuts import redirect
 
 from doctors.models import Doctors
@@ -36,19 +36,24 @@ class AddFavorite(APIView):
         return Response({'message': 'Doctor favorited successfully'}, status=status.HTTP_200_OK)
 
 
+
 class UpdateProfile(APIView):
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = (SessionAuthentication,)
 
-
     def post(self, request):
         user = request.user
-
-        pass
+        serializer = UserUpdateSerializer(user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message': 'Profile updated successfully'})
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserRegister(APIView):
     permission_classes = (permissions.AllowAny,)
+
     def post(self,request):
         clean_data = custom_validations(request.data)
         serializer = UserRegisterSerializer(data=clean_data)
