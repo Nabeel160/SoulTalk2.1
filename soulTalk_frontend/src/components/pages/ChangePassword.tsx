@@ -1,6 +1,9 @@
 import React, { useEffect,useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 import bg from "../../assets/images/bg1.jpg";
+import {useSelector} from "react-redux";
+import { login } from "../../reduxStore/slice/Loginslice"
 
 
 const getCSRFToken = () => {
@@ -22,8 +25,15 @@ const ChangePassword: React.FC = () => {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [passwordMatch, setPasswordMatch] = useState(false);
+    const navigate = useNavigate()
+    const checkLogin = useSelector((state: any) => state?.login.isLoggedIn)
+
 
     useEffect(() => {
+        if(!checkLogin){
+      navigate('/logIn')
+      alert('Kindly login to access all pages')
+    }
          if (newPassword === confirmPassword || confirmPassword == "") {
       setPasswordMatch(true);
     } else {
@@ -40,7 +50,9 @@ const ChangePassword: React.FC = () => {
                 new_password: newPassword,
             });
             if(response.status>=200 && response.status<300) {
+                navigate('/UserProfile')
                 alert('Password changed successfully');
+
             }
         } catch (error) {
             alert('Error changing password');

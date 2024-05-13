@@ -6,7 +6,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from channels.routing import ProtocolTypeRouter
 from doctors.views import DoctorsView, getToken, DocReviewCreation
-from user.views import UserViewSet, UserRegister, UserLogin, UserLogout, UserView, AddFavorite, RemoveFavorite, UpdateProfile, Subscribe, Unsubscribe, change_password
+from user.views import UserViewSet, UserRegister, UserLogin, UserLogout, UserView, AddFavorite, RemoveFavorite, UpdateProfile, Subscribe, Unsubscribe, ChangePassword
 from review.views import ReviewsView, ReviewCreation
 from forums.views import PostView, PostCreation, ReplyCreation
 from doctors.views import CreateCheckOutSession, stripe_webhook_view
@@ -54,7 +54,7 @@ urlpatterns = [
     path('api/update_profile/', UpdateProfile.as_view(), name="updateProfile"),
     path('api/subscribe_doctor/', Subscribe.as_view(), name='subscribe'),
     path('api/unsubscribe_doctor/', Unsubscribe.as_view(), name='unsubscribe'),
-    path('api/change_password/', uv.change_password, name='change_password')
+    path('api/change_password/', ChangePassword.as_view(), name='change_password')
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

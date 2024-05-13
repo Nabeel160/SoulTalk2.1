@@ -35,6 +35,7 @@ function UserProfile() {
     const [errorMessage,setErrorMessage]=useState("");
     const navigate = useNavigate();
     const [depression, setDepression] = useState('');
+    const checkLogin = useSelector((state: any) => state?.login.isLoggedIn)
 
 
     const logouts = async() =>
@@ -84,8 +85,15 @@ function UserProfile() {
     const UpdateProfile = () => {
         navigate('/UpdateProfile')
     }
+    const ChangePassword = () => {
+        navigate('/ChangePassword')
+    }
 
     useEffect(() => {
+        if(!checkLogin){
+      navigate('/logIn')
+      alert('Kindly login to access all pages')
+    }
         fetchUser()
     }, [])
 
@@ -109,10 +117,10 @@ function UserProfile() {
                 <MDBCol md="4" className="gradient-custom text-center text-white"
                   style={{ borderTopLeftRadius: '.5rem', borderBottomLeftRadius: '.5rem' }}>
                   <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                    alt="Avatar" className="my-5" style={{ width: '80px' }} fluid />
+                    alt="Avatar" className="my-5" style={{ width: '80px'}} fluid />
                   <MDBTypography tag="h5">{`${User?User.first_name:""} ${User?User.last_name:""}`}</MDBTypography>
                   <MDBCardText>{User?User.username:""}</MDBCardText>
-                  <MDBIcon far icon="edit mb-5" />
+                  <MDBIcon far icon="edit mb-5" style={{fontSize: '30px', cursor: 'pointer' }}  onClick={UpdateProfile} />
                 </MDBCol>
                 <MDBCol md="8">
                   <MDBCardBody className="p-4 d-flex flex-column">
@@ -144,7 +152,7 @@ function UserProfile() {
                                 )}
                       </MDBCol>
                     </MDBRow>
-                      <button className='btn btn-success ' onClick={UpdateProfile}>Update Profle</button>
+                      <button className='btn btn-success ' onClick={ChangePassword}>Change Password</button>
                       <br/>
                       {User && User.is_doctor && (
                           <button className='btn btn-primary ' onClick={GoToProfile}>Go to Profle</button>

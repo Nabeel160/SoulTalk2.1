@@ -1,6 +1,8 @@
 import React from "react"
 import "../../styles/UpdateProfile.css"
 import {useEffect, useState} from "react";
+import { useSelector } from "react-redux";
+import { login } from "../../reduxStore/slice/Loginslice"
 import axios from "axios";
 import bg from "../../assets/images/bg1.jpg"
 import {useNavigate} from "react-router-dom";
@@ -34,6 +36,7 @@ const UpdateProfile =()=>
     const [email, setEmail] = useState<any>()
     const [username, setUsername] = useState<any>()
     const navigate = useNavigate()
+    const checkLogin = useSelector((state: any) => state?.login.isLoggedIn)
 
     const fetchUser = async() => {
         try {
@@ -77,6 +80,10 @@ const UpdateProfile =()=>
 
 
     useEffect(() => {
+        if(!checkLogin){
+      navigate('/logIn')
+      alert('Kindly login to access all pages')
+    }
         fetchUser()
     }, [])
 

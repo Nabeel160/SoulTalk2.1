@@ -4,6 +4,7 @@ import {VideoRoom} from "./VideoRoom";
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { login } from '../../../reduxStore/slice/Loginslice'
 import {useParams} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {API_URL} from "../../../Config";
@@ -46,6 +47,7 @@ const PsychologistDetail = () => {
     const [isSubscribed, setIsSubscribed] = useState<boolean | null>(null)
     const [data, setData] = useState<any>()
     const { doctor_id } = useParams();
+    const checkLogin = useSelector((state: any) => state?.login.isLoggedIn)
     const [doc, setDoc] = useState<DoctorType>({
         id: selectedPsychologist.id,
         first_name: selectedPsychologist.first_name,
@@ -74,7 +76,10 @@ const PsychologistDetail = () => {
     }
 
     useEffect(() => {
-
+        if(!checkLogin){
+      navigate('/logIn')
+      alert('Kindly login to access all pages')
+    }
         console.log("USE EFFECT WORKIN")
         fetchUser()
     }, [])

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { login } from '../../reduxStore/slice/Loginslice'
+import { useSelector} from "react-redux";
+import { useNavigate } from "react-router-dom";
 import "../../styles/PsycholgistDetail.css";
 import "../../styles/Review.css"
 import bg from "../../assets/images/bg1.jpg";
@@ -29,6 +32,8 @@ const client = axios.create({
   const [rating, setRating] = useState<any>('');
   const [comment, setComment] = useState('');
   const [show, setShow] = useState(false);
+  const checkLogin = useSelector((state: any) => state?.login.isLoggedIn)
+    const navigate = useNavigate()
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
@@ -51,6 +56,10 @@ const client = axios.create({
 
 
   useEffect(() => {
+      if(!checkLogin){
+      navigate('/logIn')
+      alert('Kindly login to access all pages')
+    }
     // Make an API request to fetch the reviews
       fetchReviews()
 

@@ -15,23 +15,27 @@ from django.contrib.auth import authenticate, login
 from doctors.models import Doctors
 
 
+class ChangePassword(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (SessionAuthentication,)
+    def post(self, request):
 
-def change_password(request):
-    if request.method == 'POST':
-        old_password = request.POST.get('old_password')
-        new_password = request.POST.get('new_password')
+        old_password = request.data.get('old_password')
+        new_password = request.data.get('new_password')
         print(old_password)
+        print(new_password)
 
-        user = authenticate(request, username=request.user.username, password=old_password)
+        user = authenticate(request, email=request.user.email, password=old_password)
+
         if user is not None:
+            print(old_password)
             user.set_password(new_password)
             user.save()
             login(request, user)  # Update user's session
             return JsonResponse({'message': 'Password changed successfully'})
         else:
             return JsonResponse({'error': 'Incorrect old password'}, status=400)
-    else:
-        return JsonResponse({'error': 'Invalid request method'}, status=400)
+
 
 
 

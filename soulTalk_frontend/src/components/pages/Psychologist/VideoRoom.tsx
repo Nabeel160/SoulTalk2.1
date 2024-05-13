@@ -7,16 +7,30 @@ import stop from "../../../assets/images/stop.png"
 import AgoraRTC from "agora-rtc-sdk-ng";
 import { VideoPlayer } from './VideoPlayer';
 import ".././../../styles/Video.css"
+import {useNavigate} from "react-router-dom";
+import { useSelector } from "react-redux";
+import { login } from "../../../reduxStore/slice/Loginslice"
+
 export const VideoRoom = () => {
     const APP_ID = "84cd947b94c744deaca5575946294f1f";
     const TOKEN = sessionStorage.getItem('token') || "abc";
     const CHANNEL = sessionStorage.getItem('room') || 'defaultname';
     let uid = Number(sessionStorage.getItem('UID'));
+    const checkLogin = useSelector((state: any) => state?.login.isLoggedIn)
+    const navigate = useNavigate()
 
     const client = AgoraRTC.createClient({
         mode: 'rtc',
         codec: 'vp8'
     });
+
+
+    useEffect(() => {
+        if(!checkLogin){
+      navigate('/logIn')
+      alert('Kindly login to access all pages')
+    }
+    }, [])
 
     const [users, setUsers] = useState<any[]>([]);
     const [localTracks, setLocalTracks] = useState<any[]>([]);

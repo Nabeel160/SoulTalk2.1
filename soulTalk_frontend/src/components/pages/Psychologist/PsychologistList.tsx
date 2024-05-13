@@ -1,22 +1,32 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setPsychologist, selectPsychologist } from '../../../reduxStore/slice/psychologistSlice';
+import { login } from "../../../reduxStore/slice/Loginslice";
 import { Link } from 'react-router-dom';
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import "../../../styles/psychologist.css";
 
 const PsychologistList = () => {
   const psychologists = useSelector((state:any) => state?.psychologists?.Psychologists);
   const loading = useSelector((state:any) => state?.psychologists?.loading);
+  const checkLogin = useSelector((state: any) => state?.login.isLoggedIn)
+  const navigate = useNavigate()
   const dispatch = useDispatch();
 
   const fetchData = async () => {
-    const response = await axios.get('http://127.0.0.1:8000/api/doctors/');
-    dispatch(setPsychologist(response.data));
-    console.log("DATA FETCHED", response.data);
-  };
+    try {
+      const response = await axios.get('http://127.0.0.1:8000/api/doctors/');
+      dispatch(setPsychologist(response.data));
+      console.log("DATA FETCHED", response.data);
+    }catch(e){}
+    };
 
   useEffect(() => {
+    if(!checkLogin){
+      navigate('/logIn')
+      alert('Kindly login to access all pages')
+    }
     fetchData();
   }, [dispatch]);
 

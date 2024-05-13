@@ -1,11 +1,12 @@
 // chatroom-frontend/src/Chatroom.tsx
 
 import React, { useState, useEffect,useRef } from 'react';
+import { useSelector } from "react-redux";
 import bg from "../../assets/images/download.jpeg"
 import axios from 'axios';
 import "../../styles/PublicChatroom.css"
 import bg1 from "../../assets/images/bg1.jpg"
-import {logout} from "../../reduxStore/slice/Loginslice";
+import {login, logout} from "../../reduxStore/slice/Loginslice";
 import {useNavigate} from "react-router-dom";
 interface Message {
   content: string;
@@ -36,23 +37,30 @@ const Chatroom: React.FC = () => {
   const [User,setUser]=useState<any>("")
     const chatWindowRef = useRef<HTMLUListElement>(null);
   const navigate = useNavigate()
+    const checkLogin = useSelector((state: any) => state?.login.isLoggedIn)
   var msg = "";
 
  const fetchUser = async () => {
 
-            let response = await client.get('api/userview/')
-            const user = await response.data.user
-            setUser(user)
-            console.log("User: ", response.data.user.username)
+            try {
 
-            let ur: any = getChatroomNameFromURL()
-            let parts = ur.split("-")
-        if(getChatroomNameFromURL()!="public"){
-            if(parseInt(parts[0])===response.data.user.id || parseInt(parts[1])===response.data.user.id){
-            }else {
-                navigate("/")
+                let response = await client.get('api/userview/')
+                const user = await response.data.user
+                setUser(user)
+                console.log("User: ", response.data.user.username)
+
+                let ur: any = getChatroomNameFromURL()
+                let parts = ur.split("-")
+                if (getChatroomNameFromURL() != "public") {
+                    if (parseInt(parts[0]) === response.data.user.id || parseInt(parts[1]) === response.data.user.id) {
+                    } else {
+                        navigate("/")
+                        alert('Error: Chat not found')
+                    }
+                }
+            }catch (e) {
+
             }
-        }
     }
     function getChatroomNameFromURL(): string | null {
     const match = window.location.pathname.match(/^\/chat\/([^\/]+)/);
@@ -62,6 +70,10 @@ const Chatroom: React.FC = () => {
 
 
     useEffect(() => {
+        if(!checkLogin){
+      navigate('/logIn')
+      alert('Kindly login to access all pages')
+    }
         fetchUser()
 
     }, [])

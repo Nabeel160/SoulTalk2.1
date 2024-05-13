@@ -1,6 +1,8 @@
 import React, { useEffect,useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { setThreads,selectThreads } from '../../../reduxStore/slice/ForumSlice';
+import { login } from "../../../reduxStore/slice/Loginslice"
 import { Link } from 'react-router-dom';
 import imag from "../../../assets/images/download.jpeg";
 import bg from "../../../assets/images/bg1.jpg"
@@ -29,17 +31,24 @@ const client = axios.create({
 
 const Forums = () => {
     const forums: any = useSelector((state:any) => state?.forum?.threads);
+    const checkLogin = useSelector((state: any) => state?.login.isLoggedIn)
     const dispatch = useDispatch();
-    const fetchData = async () => {
+    const navigate = useNavigate()
 
+    const fetchData = async () => {
+    try {
         const response = await axios.get('http://127.0.0.1:8000/api/forums/');
         const data = response.data;
         dispatch(setThreads(data as any))
         console.log("DATA FETCHED" + data)
+    }catch(e){}
     }
     useEffect(() => {
       // Fetch data initially
-
+        if(!checkLogin){
+      navigate('/logIn')
+      alert('Kindly login to access all pages')
+    }
 
       // Fetch data every second
        setInterval(() => {
