@@ -6,6 +6,7 @@ import axios from 'axios';
 import "../../styles/PublicChatroom.css"
 import bg1 from "../../assets/images/bg1.jpg"
 import {logout} from "../../reduxStore/slice/Loginslice";
+import {useNavigate} from "react-router-dom";
 interface Message {
   content: string;
   user: string;
@@ -34,6 +35,7 @@ const Chatroom: React.FC = () => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [User,setUser]=useState<any>("")
     const chatWindowRef = useRef<HTMLUListElement>(null);
+  const navigate = useNavigate()
   var msg = "";
 
  const fetchUser = async () => {
@@ -43,16 +45,32 @@ const Chatroom: React.FC = () => {
             setUser(user)
             console.log("User: ", response.data.user.username)
 
-
+            let ur: any = getChatroomNameFromURL()
+            let parts = ur.split("-")
+        if(getChatroomNameFromURL()!="public"){
+            if(parseInt(parts[0])===response.data.user.id || parseInt(parts[1])===response.data.user.id){
+            }else {
+                navigate("/")
+            }
+        }
     }
+    function getChatroomNameFromURL(): string | null {
+    const match = window.location.pathname.match(/^\/chat\/([^\/]+)/);
+    return match ? match[1] : null;
+}
+
+
 
     useEffect(() => {
         fetchUser()
+
     }, [])
 
 
 
   useEffect(() => {
+
+
 
     const fetchOldMessages = async () => {
       try {
@@ -77,10 +95,7 @@ const Chatroom: React.FC = () => {
     fetchOldMessages();
 
 
-    function getChatroomNameFromURL(): string | null {
-    const match = window.location.pathname.match(/^\/chat\/([^\/]+)/);
-    return match ? match[1] : null;
-}
+
   const channel_name = getChatroomNameFromURL();
 
 

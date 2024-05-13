@@ -6,7 +6,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from channels.routing import ProtocolTypeRouter
 from doctors.views import DoctorsView, getToken, DocReviewCreation
-from user.views import UserViewSet, UserRegister, UserLogin, UserLogout, UserView, AddFavorite, RemoveFavorite, UpdateProfile
+from user.views import UserViewSet, UserRegister, UserLogin, UserLogout, UserView, AddFavorite, RemoveFavorite, UpdateProfile, Subscribe, Unsubscribe, change_password
 from review.views import ReviewsView, ReviewCreation
 from forums.views import PostView, PostCreation, ReplyCreation
 from doctors.views import CreateCheckOutSession, stripe_webhook_view
@@ -16,6 +16,7 @@ from chatroom.views import MessageView
 
 
 from doctors import views
+from user import views as uv
 #from chatroom import views as cv
 
 
@@ -47,10 +48,13 @@ urlpatterns = [
     path('api/doctors/stripe-webhook/', stripe_webhook_view, name='stripe-webhook'),
     path('api/doctors/create-checkout-session/<pk>/', CreateCheckOutSession.as_view(), name="checkoutSession"),
     path('reset_password/',auth_views.PasswordResetView.as_view(),name="reset_password"),
-  path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(),name="password_reset_done"),
-   path('reset/<uidb64>/<token>', auth_views.PasswordResetConfirmView.as_view(),name="password_reset_cofirm"),
+    path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(),name="password_reset_done"),
+    path('reset/<uidb64>/<token>', auth_views.PasswordResetConfirmView.as_view(),name="password_reset_cofirm"),
     path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(),name="password_reset_complete"),
-    path('api/update_profile/', UpdateProfile.as_view(), name="updateProfile")
+    path('api/update_profile/', UpdateProfile.as_view(), name="updateProfile"),
+    path('api/subscribe_doctor/', Subscribe.as_view(), name='subscribe'),
+    path('api/unsubscribe_doctor/', Unsubscribe.as_view(), name='unsubscribe'),
+    path('api/change_password/', uv.change_password, name='change_password')
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

@@ -3,6 +3,9 @@ from .models import Doctors, DocReview
 from user.serializer import UserSerializer
 
 
+
+
+
 class DocReviewSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     class Meta:

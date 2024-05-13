@@ -1,7 +1,15 @@
 from django.contrib.auth import authenticate, get_user_model
 from django.core.exceptions import ValidationError
 from rest_framework import serializers
+from doctors.models import Doctors
 from .models import NewUser
+
+
+
+class SubscribedDoctorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Doctors
+        fields = ['id', 'first_name', 'last_name']
 
 
 class UserUpdateSerializer(serializers.ModelSerializer):
@@ -30,14 +38,37 @@ class UserLoginSerializer(serializers.Serializer):
         return user
 
 
-class UserSerializer(serializers.ModelSerializer):
 
-    favorite = serializers.SerializerMethodField()
+class SubscriberSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = NewUser
-        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'favorite', 'date_of_birth', 'gender', 'score', 'is_staff', 'is_doctor']
+        fields = ['id', 'first_name', 'last_name', 'subscribed']
+
+
+
+class DoctorsSerializers(serializers.ModelSerializer):
+
+    subscribers = SubscriberSerializer(many=True, read_only=True, source="newuser_set")
+    class Meta:
+        model = Doctors
+        fields = ['id', 'subscribers']
+
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    doctor = DoctorsSerializers(many=True, read_only=True, source="doctors_set")
+    favorite = serializers.SerializerMethodField()
+    subscribed = SubscribedDoctorSerializer()
+
+    class Meta:
+        model = NewUser
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'favorite', 'subscribed', 'doctor', 'date_of_birth', 'gender', 'score', 'is_staff', 'is_doctor']
 
     def get_favorite(self, instance):
         from doctors.serializer import DoctorsSerializerFav
         return DoctorsSerializerFav(instance.favorite.all(), many=True).data
+
+
+

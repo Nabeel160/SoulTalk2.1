@@ -52,7 +52,7 @@ class CreateCheckOutSession(APIView):
                     "product_id": product.id
                 },
                 mode='payment',
-                success_url=settings.SITE_URL + '?success=true',
+                success_url='http://127.0.0.1:3000/Psychologist/psychologistList',
                 cancel_url=settings.SITE_URL + '?canceled=true',
             )
 

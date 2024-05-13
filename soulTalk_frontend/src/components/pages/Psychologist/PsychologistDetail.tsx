@@ -43,6 +43,7 @@ const PsychologistDetail = () => {
     const [user, setUser] = useState<any>()
     const [joined, setJoined] = useState(false)
     const [isFavorite, setIsFavorite] = useState<boolean | null>(null)
+    const [isSubscribed, setIsSubscribed] = useState<boolean | null>(null)
     const [data, setData] = useState<any>()
     const { doctor_id } = useParams();
     const [doc, setDoc] = useState<DoctorType>({
@@ -64,7 +65,9 @@ const PsychologistDetail = () => {
         setIsFavorite(true)
       }
     });
-
+        if(response.data.user.subscribed.id == selectedPsychologist.id){
+            setIsSubscribed(true)
+        }
         }catch(error){
             console.log(error)
         }
@@ -174,6 +177,20 @@ const PsychologistDetail = () => {
       }
   }
 
+
+  const handleUnsubscribe = async () => {
+      try{
+          const response = await client.post('api/unsubscribe_doctor/',{
+              doctor: selectedPsychologist.id
+          })
+          setIsSubscribed(false)
+          fetchUser()
+      }catch(e){
+          console.log(e)
+      }
+  }
+
+
   const handleCheckout = async () => {
 
             const csrfToken = getCSRFToken();
@@ -181,6 +198,15 @@ const PsychologistDetail = () => {
                 console.error('CSRF token not found');
                 return;
             }
+
+            try {
+                const resp = await client.post('api/subscribe_doctor/',{
+                    doctor: selectedPsychologist.id
+                })
+            }catch(e){
+                console.log(e)
+            }
+
             const response = await fetch(`${API_URL}/api/doctors/create-checkout-session/${selectedPsychologist.id}/`, {
                 method: 'POST',
                 headers: {
@@ -205,7 +231,7 @@ const PsychologistDetail = () => {
     };
 
     const chat = () => {
-        navigate(`/chat/${selectedPsychologist.id}${user.id}`)
+        navigate(`/chat/${selectedPsychologist.user.id}-${user.id}`)
     }
 
 
@@ -234,8 +260,10 @@ const PsychologistDetail = () => {
                         <span>Qualification</span>
                         <input className="text-uppercase input" placeholder={selectedPsychologist.qualification}  type="text" disabled/>
                     </label>
-                     <button className="btn buttons me-md-2" type="button"  onClick={handleCheckout} >Subscribe</button>
-                </form>
+                    {isSubscribed ? (
+                     <button className="btn buttons me-md-2" type="button"  onClick={handleUnsubscribe} >Unsubscribe</button>
+                        ):(<button className="btn buttons me-md-2" type="button"  onClick={handleCheckout} >Subscribe</button>)}
+                    </form>
             </div>
             <div className="picsandcall col-md-4 d-flex flex-column mr-0">
             <img src={selectedPsychologist.image}/>

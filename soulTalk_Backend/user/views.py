@@ -9,8 +9,30 @@ from rest_framework import permissions, status
 from .validations import custom_validations, validate_email, validate_password, validate_username
 from django.http import JsonResponse
 from django.shortcuts import redirect
-
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 from doctors.models import Doctors
+
+
+
+def change_password(request):
+    if request.method == 'POST':
+        old_password = request.POST.get('old_password')
+        new_password = request.POST.get('new_password')
+        print(old_password)
+
+        user = authenticate(request, username=request.user.username, password=old_password)
+        if user is not None:
+            user.set_password(new_password)
+            user.save()
+            login(request, user)  # Update user's session
+            return JsonResponse({'message': 'Password changed successfully'})
+        else:
+            return JsonResponse({'error': 'Incorrect old password'}, status=400)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=400)
+
 
 
 class RemoveFavorite(APIView):
@@ -35,7 +57,31 @@ class AddFavorite(APIView):
 
         return Response({'message': 'Doctor favorited successfully'}, status=status.HTTP_200_OK)
 
+class Subscribe(APIView):
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        doctor_id = request.data.get('doctor')
+        doctor = get_object_or_404(Doctors, pk=doctor_id)
 
+        user.subscribed = doctor
+        user.save()
+
+        return Response({'message': 'Doctor Subscribed'}, status=status.HTTP_200_OK)
+
+
+class Unsubscribe(APIView):
+
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        doctor_id = request.data.get('doctor')
+        doctor = get_object_or_404(Doctors, pk=doctor_id)
+
+        if user.subscribed == doctor:
+            user.subscribed = None
+            user.save()
+            return Response({'message': 'Doctor Unsubscribed'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'message': 'Error occured.'}, status=status.HTTP_400_BAD_REQUEST)
 
 class UpdateProfile(APIView):
     permission_classes = (permissions.IsAuthenticated,)

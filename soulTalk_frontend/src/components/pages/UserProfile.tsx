@@ -89,6 +89,13 @@ function UserProfile() {
         fetchUser()
     }, [])
 
+    const chat = (userId: any) => {
+        navigate(`/chat/${User.doctor[0].id}${userId}`)
+    }
+
+    const GoToProfile = () =>{
+        navigate(`/Psychologist/PsychologistDetail/${User.doctor[0].id}`)
+    }
 
     return(
         <>
@@ -129,7 +136,7 @@ function UserProfile() {
                       </MDBCol>
                       <MDBCol size="10" className="mb-3 d-flex flex-row">
 
-                          {User && User.is_doctor && (
+                          {User && (
                              <>
                              <MDBTypography tag="h6">Depression Level</MDBTypography>
                                  <MDBCardText className="text-muted text-center mx-auto">{depression}</MDBCardText>
@@ -137,8 +144,12 @@ function UserProfile() {
                                 )}
                       </MDBCol>
                     </MDBRow>
-                      <button className='btn btn-danger ' onClick={UpdateProfile}>Update Profle</button>
-<button className='btn btn-danger mb-5 mt-3' onClick={logouts}>log Out</button>
+                      <button className='btn btn-success ' onClick={UpdateProfile}>Update Profle</button>
+                      <br/>
+                      {User && User.is_doctor && (
+                          <button className='btn btn-primary ' onClick={GoToProfile}>Go to Profle</button>
+                      )}
+                      <button className='btn btn-danger mb-5 mt-3' onClick={logouts}>log Out</button>
 
                   </MDBCardBody>
                 </MDBCol>
@@ -148,11 +159,22 @@ function UserProfile() {
         </MDBRow>
       </MDBContainer>
 
-     {User?User.favorite.map((favorites: any, index:any) => (
+
+     {User && !User.is_doctor ?User.favorite.map((favorites: any, index:any) => (
 
              <h1 key={favorites.id}><Link to={`/Psychologist/PsychologistDetail/${favorites.id}`}>{favorites.first_name}</Link></h1>
 
      )):""}
+
+     {User && User.is_doctor ? User.doctor[0].subscribers.map((subscribers: any, index:any)=> (
+         <div key={subscribers.id}>
+            <h1 style={{ display: 'inline-block', marginRight: '10px' }}>{subscribers.first_name}</h1>
+            <button className="btn buttons" type="button" onClick={() => chat(subscribers.id)}>Chat</button>
+        </div>
+     )): ""}
+
+
+
     </section>
             </>
     )

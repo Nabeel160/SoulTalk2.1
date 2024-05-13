@@ -13,8 +13,9 @@ class UserAdminConfig(UserAdmin):
 
     fieldsets = (
         ('Personal Information', {'fields': (tuple(['first_name','last_name']), 'gender', 'date_of_birth', 'score')}),
-        ('Account Details', {'fields': ['username', 'email']}),
+        ('Account Details', {'fields': ['username', 'email', 'password']}),
         ('Favorite Doctors', {'fields': ['favorite']}),
+        ('Subscribed Doctor', {'fields': ['subscribed']}),
         ('Permissions', {'fields': ('is_staff', 'is_superuser', 'is_doctor')}),
     )
 
