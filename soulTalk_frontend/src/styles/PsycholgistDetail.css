@@ -23,6 +23,10 @@ background: #ffffff;
 box-shadow:  20px 20px 60px #ffffff,
              -20px -20px 60px #319898;
   margin-bottom: 8px;
+   min-width: 300px;
+  min-height: 300px;
+  object-fit: cover; /* Ensures the image covers the area without distortion */
+
 }
 
 

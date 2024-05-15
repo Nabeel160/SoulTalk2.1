@@ -45,11 +45,11 @@ const PsychologistList = () => {
           <div className="flip-card  ">
             <div className="flip-card-inner">
               <div className="flip-card-front">
-                <img className="title" src={psychologist.image} alt="Psychologist" />
+                <img className="ttitle p-0" src={psychologist.image} alt="Psychologist" />
               </div>
               <div className="flip-card-back ">
-                <p className="title text-uppercase" ><u>{psychologist.first_name} {psychologist.last_name}</u></p>
-                <h5 className="text-uppercase"><u>Details</u></h5>
+                <p className="ttitle text-uppercase " ><u>{psychologist.first_name} {psychologist.last_name}</u></p>
+                <h5 className="text-uppercase">Details</h5>
                 <p style={{fontSize:"15px"}}><b>Email:</b> {psychologist.user.email}</p>
                 <p style={{fontSize:"15px"}}><b>Age:</b> {psychologist.age}</p>
                 <p><b>Qualification:</b> {psychologist.qualification}</p>
