@@ -89,6 +89,23 @@ function UserProfile() {
         fetchUser()
     }, [])
 
+    let handleSub = async (userId: any) => {
+        let room = `${User.doctor[0].id} - ${userId}`
+        let response = await fetch(`http://127.0.0.1:8000/get_token/?channel=${room}`)
+        let data = await response.json()
+
+        let UID = data.uid
+        let token = data.token
+
+        sessionStorage.setItem('UID', UID)
+        sessionStorage.setItem('token', token)
+        sessionStorage.setItem('room', room)
+
+        window.open('/VideoRoom', '_self')
+
+    }
+
+
     const chat = (userId: any) => {
         navigate(`/chat/${User.doctor[0].id}${userId}`)
     }
@@ -171,6 +188,7 @@ function UserProfile() {
         <div key={subscriber.id}>
             <h1 style={{ display: 'inline-block', marginRight: '10px' }}>{subscriber ? subscriber.first_name : ""}</h1>
             <button className="btn button" type="button" onClick={() => chat(subscriber ? subscriber.id : "")}>Chat</button>
+            <button className="btn button" type="button" onClick={() => handleSub(subscriber ? subscriber.id : "")}>Call</button>
         </div>
     ))
 ) : ""}
