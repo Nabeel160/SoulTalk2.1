@@ -206,7 +206,7 @@ function Navbar() {
     <li className="dropdowns-items"><Link className="dropdown-item "  to="/Psychologist/psychologistList">Psychologist</Link></li>
     <li className="dropdowns-items"><Link className="dropdown-item"  to="/Reviews">Reviews</Link></li>
     <li className="dropdowns-items"><Link className="dropdown-item"    to="/Forum/Forums">Forums</Link></li>
-   <li className="dropdowns-items"><Link className="dropdown-item"    to="/chat/public">Chat Toom</Link></li>
+   <li className="dropdowns-items"><Link className="dropdown-item"    to="/chat/public">Chat Room</Link></li>
 
             </ul>
           </li>

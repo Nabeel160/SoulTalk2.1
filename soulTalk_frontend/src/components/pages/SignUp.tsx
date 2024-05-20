@@ -66,13 +66,16 @@ function SignUp() {
     }
     const domain = email.split('@')[1];
     const gmailDomain = 'gmail.com';
+    const outlookDomain = 'outlook.com';
     if (!domain) {
-      setEmailError(false);
+      setEmailError(true);
     } else {
       for (let i = 0; i < domain.length; i++) {
-        if (domain[i] !== gmailDomain[i]) {
-          setEmailError(true);
-          return;
+        if (domain !== gmailDomain) {
+          if(domain !== outlookDomain) {
+            setEmailError(true);
+            return;
+          }
         }
       }
       setEmailError(false);
@@ -160,7 +163,8 @@ function SignUp() {
       console.log(error)
     }
   }
-
+  const minDate = new Date();
+  minDate.setFullYear(minDate.getFullYear() - 18);
   return (
    <div className="loginmargin" style={{ marginTop: "4.7%" }}>
       <MDBContainer fluid className='bg-dark signupcontainer' >
@@ -199,6 +203,7 @@ function SignUp() {
                           type='text'
                           value={selectedDate ? (selectedDate as Date).toLocaleDateString('en-GB') : ''}
                           onClick={handleInputClick}
+                          autoComplete="off"
                           required
                         >
                           <DatePicker
@@ -207,7 +212,7 @@ function SignUp() {
                             dateFormat="dd-MM-yyyy"
                             className="d-none"
                             showYearDropdown
-                            yearDropdownItemNumber={15} // You can adjust the number of years displayed
+                            yearDropdownItemNumber={25} // You can adjust the number of years displayed
                             scrollableYearDropdown
                             ref={datePickerRef}
                             onClickOutside={() => {
@@ -215,12 +220,14 @@ function SignUp() {
                                 inputRef.current.focus();
                               }
                             }}
+                            maxDate={minDate} // Optionally, you can set max date to today
+                              startDate={minDate}
                           />
                         </MDBInput>
-                        <input ref={inputRef} style={{ display: 'none' }} />
+                        <input ref={inputRef}  style={{ display: 'none' }} />
                       </MDBInputGroup>
                         <MDBInput wrapperClass='mb-4' label='Email' name='email' value={email} onChange={e => setEmail(e.target.value)} size='lg' id='form4' type='text' required />
-                      {emailError && email.length > 0 && <div className="text-danger mb-4">Please enter a valid Gmail address.</div>}
+                      {emailError && email.length > 0 && <div className="text-danger mb-4">Please enter a valid email address.</div>}
                       <MDBInput wrapperClass='mb-4' label='Password' name='password' value={password} onChange={e => setPassword(e.target.value)} size='lg' id='form6' type='password' minLength={8} required />
                       <MDBInput wrapperClass='mb-4' label="Confirm Password" size="lg" id="form7" type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} required />
                       {!passwordMatch && <div className="text-danger mb-4">Passwords do not match.</div>}     <div className='d-md-flex justify-content-start align-items-center mb-4'>
@@ -254,7 +261,7 @@ function SignUp() {
                             color='info'
                             size='lg'
                             onClick={handleQuestionaire}
-                            disabled={!formCompleted || !passwordMatch} // Disable button if form is not completed or passwords don't match
+                            disabled={!formCompleted || !passwordMatch || emailError} // Disable button if form is not completed or passwords don't match
                           >
                             Submit form
                           </MDBBtn>

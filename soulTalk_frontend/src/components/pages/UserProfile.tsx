@@ -84,6 +84,9 @@ function UserProfile() {
     const UpdateProfile = () => {
         navigate('/UpdateProfile')
     }
+    const UpdatePassword = () => {
+        navigate('/ChangePassword')
+    }
 
     useEffect(() => {
         fetchUser()
@@ -129,7 +132,7 @@ function UserProfile() {
                     alt="Avatar" className="my-5" style={{ width: '80px' }} fluid />
                   <MDBTypography tag="h5">{`${User?User.first_name:""} ${User?User.last_name:""}`}</MDBTypography>
                   <MDBCardText>{User?User.username:""}</MDBCardText>
-                  <MDBIcon far icon="edit mb-5" />
+                  <MDBIcon far icon="edit mb-5" style={{width: '80px', height: '150px'}} onClick={UpdateProfile}/>
                 </MDBCol>
                 <MDBCol md="8">
                   <MDBCardBody className="p-4 d-flex flex-column">
@@ -161,7 +164,7 @@ function UserProfile() {
                                 )}
                       </MDBCol>
                     </MDBRow>
-                      <button className='btn btn-success ' onClick={UpdateProfile}>Update Profle</button>
+                      <button className='btn btn-success ' onClick={UpdatePassword}>Change Password</button>
                       <br/>
                       {User && User.is_doctor && (
                           <button className='btn btn-primary ' onClick={GoToProfile}>Go to Profle</button>
