@@ -5,10 +5,8 @@ import Navbar from './components/nav_components/Navbar';
 import './App.css';
 import Home from './components/pages/Home'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Products from './components/pages/Products'
 import ContactUs from './components/pages/ContactUs';
 import LogIn from './components/pages/LogIn';
-import Marketing from './components/pages/Marketing';
 import PsychologistDetail from './components/pages/Psychologist/PsychologistDetail';
 import PsychologistList from './components/pages/Psychologist/PsychologistList';
 import SignUp from './components/pages/SignUp';
@@ -44,10 +42,9 @@ function App():JSX.Element {
       <Navbar />
       <Routes>
         <Route path='/'  Component={Home} />
-        <Route path='/products' Component={Products} />
+
         <Route path='/ContactUs' Component={ContactUs} />
         <Route path='/LogIn' Component={LogIn} />
-        <Route path='/marketing' Component={Marketing} />
         <Route path='/Psychologist/PsychologistList' Component={PsychologistList} />
         <Route path= 'Psychologist/PsychologistDetail/:id' Component={PsychologistDetail}/>
         <Route path="/Signup" Component={SignUp}/>

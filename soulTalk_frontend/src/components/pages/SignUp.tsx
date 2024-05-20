@@ -1,7 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Toast } from 'primereact/toast';
+import { FileUpload } from 'primereact/fileupload';
 import { useNavigate } from 'react-router-dom';
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
-import { parseISO } from 'date-fns';
+import 'primeicons/primeicons.css';
+import { PrimeReactProvider } from 'primereact/api';
+import 'primeflex/primeflex.css';
+import 'primereact/resources/primereact.css';
+import 'primereact/resources/themes/lara-light-indigo/theme.css';
+
 import {
   MDBBtn,
   MDBContainer,
@@ -242,8 +249,22 @@ function SignUp() {
                           <MDBRadio name='Doctor' id='Doctor' value='Doctor' label='Doctor' inline checked={doctor === true} onChange={() => setDoctor(true)} />
                           <MDBRadio name='User' id='User' value='User' label='User' inline checked={doctor === false} onChange={() => setDoctor(false)} />
                         </div>
+
                       </div>
+                       {doctor && (
+  <div className="uploader">
+    <FileUpload
+      name="demo[]"
+      url={'/api/upload'}
+      multiple
+      accept="image/*"
+      maxFileSize={1000000}
+      emptyTemplate={<p className="m-0">Please provide your id and other necessary documents for verification.</p>}
+    />
+  </div>
+)}
                       <div className="d-flex justify-content-between pt-3">
+
                         <MDBBtn color='primary' size='lg'>Reset all</MDBBtn>
                         {doctor ? (
                           <MDBBtn

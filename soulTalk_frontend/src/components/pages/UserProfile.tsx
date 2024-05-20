@@ -62,16 +62,18 @@ function UserProfile() {
 
 
 
-      if(response.data.user.score <= 4){
-          setDepression('None')
-      }else if(response.data.user.score <= 9){
-          setDepression('Mild')
-      }else if(response.data.user.score <= 14){
+      if(response.data.user.score <= 10){
+          setDepression('Normal')
+      }else if(response.data.user.score <= 16){
+          setDepression('Mild mood disturbance')
+      }else if(response.data.user.score <= 20){
+          setDepression('Borderline clinical depression')
+      }else if(response.data.user.score <= 30){
           setDepression('Moderate')
-      }else if(response.data.user.score <= 19){
-          setDepression('Moderately Severe')
-      }else if(response.data.user.score <=30){
+      }else if(response.data.user.score <=40){
           setDepression('Severe')
+      }else {
+          setDepression("Extreme depression")
       }
 
         }catch(error){

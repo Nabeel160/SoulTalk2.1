@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { questions } from './quizArray';
 import { useSelector, useDispatch } from 'react-redux';
 import {setData} from "../../reduxStore/slice/RegistrationSlice";
-import Result from './Result';
 import {login} from "../../reduxStore/slice/Loginslice";
 import axios from "axios";
 import bg from "../../assets/images/bg1.jpg"
