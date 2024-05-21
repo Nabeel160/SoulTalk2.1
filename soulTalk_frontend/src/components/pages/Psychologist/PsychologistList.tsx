@@ -40,8 +40,11 @@ const PsychologistList = () => {
     {loading ? (
       <div className="loader"></div>
     ) : (
-      psychologists?.map((psychologist: { id: React.Key | null | undefined; image: string | undefined; first_name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; last_name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; user: { email: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }; age: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; qualification: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; reviews: any[]; }) => (
-        <div className="col-12 col-sm-6 col-md-5 col-lg-4" key={psychologist.id}>
+
+      psychologists?.map((psychologist: { id: React.Key | null | undefined; image: string | undefined; first_name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; last_name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; user: { email: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }; age: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; qualification: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; reviews: any[]; active: any; }) => (
+
+          psychologist.active ? (
+          <div className="col-12 col-sm-6 col-md-5 col-lg-4" key={psychologist.id}>
           <div className="flip-card  ">
             <div className="flip-card-inner">
               <div className="flip-card-front">
@@ -62,7 +65,8 @@ const PsychologistList = () => {
             </div>
           </div>
         </div>
-      ))
+          ) : ""
+          ))
     )}
   </div>
 
