@@ -78,8 +78,8 @@ class CreateCheckOutSession(APIView):
                     "product_id": doctor.id
                 },
                 mode='payment',
-                success_url=settings.SITE_URL + '?success=true',
-                cancel_url=settings.SITE_URL + '?canceled=true',
+                success_url = f"{settings.SITE_URL}?success=true&n={doctor.id}",
+                cancel_url = f"{settings.SITE_URL}?canceled=true",
             )
 
             # Return checkout session URL in the response

@@ -152,10 +152,6 @@ const PsychologistDetail = () => {
     }
 
     try {
-      await client.post('api/subscribe_doctor/', {
-        doctor: selectedPsychologist.id
-      });
-
       const response = await fetch(`${API_URL}/api/doctors/create-checkout-session/${selectedPsychologist.id}/`, {
         method: 'POST',
         headers: {

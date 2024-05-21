@@ -3,6 +3,13 @@ from django_userforeignkey.models.fields import UserForeignKey
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.urls import reverse
 from django_resized import ResizedImageField
+from multiupload.fields import MultiFileField
+from django.core.files.storage import default_storage
+
+
+def upload_to(instance, filename):
+    today = timezone.now()
+    return f'images/{today.year}/{today.month}/{filename}'
 
 class Doctors(models.Model):
     first_name = models.CharField(max_length=50)
@@ -14,12 +21,16 @@ class Doctors(models.Model):
     user = UserForeignKey(on_delete=models.DO_NOTHING)
     image = ResizedImageField(size=[914, 927], null=True, upload_to='images')
     price = models.DecimalField(max_digits=10, decimal_places=2, default=40)
+    documents = MultiFileField(max_file_size=1024 * 1024 * 5,min_num=1, max_num=10)
+    active = models.BooleanField(default=False)
 
     def get_absolute_url(self):
         return reverse('doctors:detail', kwargs={'pk': self})
 
     def __str__(self):
         return self.first_name
+
+
 
 
 class DocReview(models.Model):

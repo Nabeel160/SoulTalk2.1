@@ -46,8 +46,7 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, null=True)
     favorite = models.ManyToManyField(Doctors, blank=True, null=True)
     score = models.IntegerField(blank=True, null=True)
-    subscribed = models.OneToOneField(Doctors, blank=True, null=True, on_delete=models.DO_NOTHING, related_name='subscribed_doctor')
-
+    subscribed = models.ForeignKey(Doctors, blank=True, null=True, on_delete=models.DO_NOTHING, related_name='subscribed_doctor')
 
     is_doctor = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)

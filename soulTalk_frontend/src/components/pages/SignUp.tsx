@@ -65,6 +65,11 @@ function SignUp() {
   const dispatch = useDispatch()
  const [email, setEmail] = useState<string>('');
   const [emailError, setEmailError] = useState(false);
+  const [cnic, setCnic] = useState<File>();
+  const [degree1, setDegree1] = useState<File | null>();
+  const [degree2, setDegree2] = useState<File | null>();
+  const [degree3, setDegree3] = useState<File | null>();
+  const [photo, setPhoto] = useState<File | null>();
 
   // Check if the domain part of the email is being typed correctly
   useEffect(() => {
@@ -172,6 +177,28 @@ function SignUp() {
   }
   const minDate = new Date();
   minDate.setFullYear(minDate.getFullYear() - 18);
+
+  const handleUpload = async () => {
+
+    try {
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: cnic,
+      });
+      if (response.ok) {
+        console.log('Upload successful');
+      } else {
+        console.error('Upload failed');
+      }
+    } catch (error) {
+      console.error('Error uploading:', error);
+    }
+  };
+
+  const Test = () => {
+    console.log('THIS IS A TESTTT')
+  }
+
   return (
    <div className="loginmargin" style={{ marginTop: "4.7%" }}>
       <MDBContainer fluid className='bg-dark signupcontainer' >
@@ -255,12 +282,13 @@ function SignUp() {
   <div className="uploader">
     <FileUpload
       name="demo[]"
-      url={'/api/upload'}
-      multiple
+      onBeforeUpload={Test}
       accept="image/*"
-      maxFileSize={1000000}
-      emptyTemplate={<p className="m-0">Please provide your id and other necessary documents for verification.</p>}
+      maxFileSize={1000000000000}
+      multiple
+      emptyTemplate={<p className="m-0">Please provide your Personal Clear Photo, CNIC and your university, intermediate and matric's degree</p>}
     />
+
   </div>
 )}
                       <div className="d-flex justify-content-between pt-3">

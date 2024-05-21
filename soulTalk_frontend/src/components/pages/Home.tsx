@@ -16,8 +16,58 @@ import Aos from 'aos';
 import 'aos/dist/aos.css';
 import {FiPlus} from "react-icons/fi";
 import Carouselmoto from '../HomeComponents/Carouselmoto';
+import axios from "axios";
+
+
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+axios.defaults.withCredentials = true;
+
+const getCSRFToken = () => {
+  const csrfCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('csrftoken='));
+  return csrfCookie ? csrfCookie.split('=')[1] : null;
+};
+
+interface DoctorType {
+  id: number;
+  first_name: string;
+  image: string;
+  price: string;
+}
+
+const client = axios.create({
+  baseURL: "http://127.0.0.1:8000",
+  withCredentials: true,
+  headers: {
+    'X-CSRFToken': getCSRFToken(), // Ensure you have the getCSRFToken function
+  },
+});
+
 
 export default function Home() {
+
+
+  useEffect(()=>{
+    const checkForCanceledParam = async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('success') && urlParams.get('success') === 'true') {
+                // Run your function here
+                // For example:
+              const number = urlParams.get('n');
+                try {
+
+                  await client.post('api/subscribe_doctor/', {
+                    doctor: number
+                  });
+                }catch(e){
+                  console.log(e)
+                }
+                // You can replace the alert with any function you want to run
+            }
+        };
+    checkForCanceledParam();
+  }, [])
+
 
   const location = useLocation();
   useEffect(() => {

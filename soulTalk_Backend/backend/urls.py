@@ -54,7 +54,8 @@ urlpatterns = [
     path('api/update_profile/', UpdateProfile.as_view(), name="updateProfile"),
     path('api/subscribe_doctor/', Subscribe.as_view(), name='subscribe'),
     path('api/unsubscribe_doctor/', Unsubscribe.as_view(), name='unsubscribe'),
-    path('api/change_password/', ChangePassword.as_view(), name='change_password')
+    path('api/change_password/', ChangePassword.as_view(), name='change_password'),
+    path('ckeditor/', include('ckeditor_uploader.urls'))
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

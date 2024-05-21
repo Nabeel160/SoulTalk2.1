@@ -89,8 +89,11 @@ INSTALLED_APPS = [
     'chatroom',
     'channels',
     'payments',
+    'ckeditor',
 
 ]
+
+CKEDITOR_UPLOAD_PATH = 'images'
 
 STRIPE_SECRET_KEY = 'sk_test_51OwIeXRupoa5NrAzkK3kaXMi83mIMO5gxUCffkqTlabqafqxBEnAXd0Ah5QcvIhBQlrZ7yJ7HTkGy61VUlPF0WK000QKd19KZK'
 STRIPE_WEBHOOK_SECRET= 'whsec_0e0c791bb0259e9e7eae25de43a823f66f9ac1e005636e8c035ea34c5562d184'
