@@ -7,7 +7,7 @@ from rest_framework.generics import RetrieveAPIView
 from rest_framework import permissions
 from payments.models import PaymentHistory
 from rest_framework import viewsets, permissions
-from .serializer import DoctorsSerializer, DocReviewSerializer
+from .serializer import DoctorsSerializer, DocReviewSerializer, DoctorStart
 from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -24,6 +24,16 @@ from django.db.models import Prefetch
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 API_URL = "http://127.0.0.1:8000"
+
+
+
+class DocCreation(CreateAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = DoctorStart
+
+    def perform_create(self, serializer):
+        serializer.save()
+
 
 class DocReviewCreation(CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]

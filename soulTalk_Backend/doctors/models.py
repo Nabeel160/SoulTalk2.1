@@ -14,14 +14,14 @@ def upload_to(instance, filename):
 class Doctors(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    age = models.IntegerField()
-    phone = models.IntegerField()
-    address = models.CharField(max_length=1000)
-    qualification = models.CharField(max_length=1000)
-    user = UserForeignKey(on_delete=models.DO_NOTHING)
+    age = models.IntegerField(null=True)
+    phone = models.IntegerField(null=True)
+    address = models.CharField(max_length=1000, null=True)
+    qualification = models.CharField(max_length=1000, null=True)
+    user = UserForeignKey(on_delete=models.DO_NOTHING, null=True)
     image = ResizedImageField(size=[914, 927], null=True, upload_to='images')
-    price = models.DecimalField(max_digits=10, decimal_places=2, default=40)
-    documents = MultiFileField(max_file_size=1024 * 1024 * 5,min_num=1, max_num=10)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=40, null=True)
+    documents = models.FileField(null=True)
     active = models.BooleanField(default=False)
 
     def get_absolute_url(self):

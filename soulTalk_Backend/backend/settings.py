@@ -89,7 +89,6 @@ INSTALLED_APPS = [
     'chatroom',
     'channels',
     'payments',
-    'ckeditor',
 
 ]
 

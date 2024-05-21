@@ -3,7 +3,12 @@ from .models import Doctors, DocReview
 from user.serializer import UserSerializer
 
 
+class DoctorStart(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
 
+    class Meta:
+        model = Doctors
+        fields = ('first_name', 'last_name', 'user', 'documents')
 
 
 class DocReviewSerializer(serializers.ModelSerializer):

@@ -134,7 +134,7 @@ function UserProfile() {
                     alt="Avatar" className="my-5" style={{ width: '80px' }} fluid />
                   <MDBTypography tag="h5">{`${User?User.first_name:""} ${User?User.last_name:""}`}</MDBTypography>
                   <MDBCardText>{User?User.username:""}</MDBCardText>
-                  <MDBIcon far icon="edit mb-5" style={{width: '80px', height: '150px'}} onClick={UpdateProfile}/>
+                  <MDBIcon far icon="edit mb-5" size='2x' style={{width: '80px', height: '150px'}} onClick={UpdateProfile}/>
                 </MDBCol>
                 <MDBCol md="8">
                   <MDBCardBody className="p-4 d-flex flex-column">

@@ -5,7 +5,7 @@ from rest_framework import routers
 from django.conf import settings
 from django.conf.urls.static import static
 from channels.routing import ProtocolTypeRouter
-from doctors.views import DoctorsView, getToken, DocReviewCreation
+from doctors.views import DoctorsView, getToken, DocReviewCreation, DocCreation
 from user.views import UserViewSet, UserRegister, UserLogin, UserLogout, UserView, AddFavorite, RemoveFavorite, UpdateProfile, Subscribe, Unsubscribe, ChangePassword
 from review.views import ReviewsView, ReviewCreation
 from forums.views import PostView, PostCreation, ReplyCreation
@@ -55,6 +55,7 @@ urlpatterns = [
     path('api/subscribe_doctor/', Subscribe.as_view(), name='subscribe'),
     path('api/unsubscribe_doctor/', Unsubscribe.as_view(), name='unsubscribe'),
     path('api/change_password/', ChangePassword.as_view(), name='change_password'),
+    path('api/submit_doctor/', DocCreation.as_view(), name='doctor_creation'),
     path('ckeditor/', include('ckeditor_uploader.urls'))
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

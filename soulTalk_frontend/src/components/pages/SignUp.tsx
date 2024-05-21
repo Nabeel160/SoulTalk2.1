@@ -65,11 +65,7 @@ function SignUp() {
   const dispatch = useDispatch()
  const [email, setEmail] = useState<string>('');
   const [emailError, setEmailError] = useState(false);
-  const [cnic, setCnic] = useState<File>();
-  const [degree1, setDegree1] = useState<File | null>();
-  const [degree2, setDegree2] = useState<File | null>();
-  const [degree3, setDegree3] = useState<File | null>();
-  const [photo, setPhoto] = useState<File | null>();
+  const [file, setFile] = useState<File | null>(null);
 
   // Check if the domain part of the email is being typed correctly
   useEffect(() => {
@@ -147,6 +143,9 @@ function SignUp() {
     e.preventDefault()
 
     try {
+
+
+
       const formattedDate = typeof selectedDate === 'string' ? selectedDate : selectedDate instanceof Date ? selectedDate.toISOString().split('T')[0] : '';
       console.log("DATE IS SAVEDDD" + formattedDate + " " + doctor)
 
@@ -168,6 +167,22 @@ function SignUp() {
           password: password
         })
         dispatch(login() as any)
+        const formData = new FormData();
+        formData.append('first_name', firstname)
+        formData.append('last_name', lastname)
+        if (!file) {
+      console.error('No file selected');
+      return;
+    }
+        formData.append('documents', file)
+
+        await client.post('api/submit_doctor/',formData, {
+
+          headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+
         navigate("/");
       }
 
@@ -178,22 +193,6 @@ function SignUp() {
   const minDate = new Date();
   minDate.setFullYear(minDate.getFullYear() - 18);
 
-  const handleUpload = async () => {
-
-    try {
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: cnic,
-      });
-      if (response.ok) {
-        console.log('Upload successful');
-      } else {
-        console.error('Upload failed');
-      }
-    } catch (error) {
-      console.error('Error uploading:', error);
-    }
-  };
 
   const Test = () => {
     console.log('THIS IS A TESTTT')
@@ -280,14 +279,17 @@ function SignUp() {
                       </div>
                        {doctor && (
   <div className="uploader">
-    <FileUpload
-      name="demo[]"
-      onBeforeUpload={Test}
-      accept="image/*"
-      maxFileSize={1000000000000}
-      multiple
-      emptyTemplate={<p className="m-0">Please provide your Personal Clear Photo, CNIC and your university, intermediate and matric's degree</p>}
-    />
+    <input
+        type="file"
+        name="demo[]"
+        accept="application/pdf"
+        onChange={(event) => {
+          if (event.target.files && event.target.files.length > 0) {
+            setFile(event.target.files[0]);
+          }
+        }}
+
+      />
 
   </div>
 )}
