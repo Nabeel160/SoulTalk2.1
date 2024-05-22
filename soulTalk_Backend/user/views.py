@@ -142,11 +142,22 @@ class UserView(APIView):
 
     def get(self, request):
         serializer = UserSerializer(request.user)
-        return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+        response = Response({'user': serializer.data}, status=status.HTTP_200_OK)
+        response['Access-Control-Allow-Origin'] = 'https://soul-talk2-1-pied.vercel.app'
+        response['Access-Control-Allow-Credentials'] = 'true'
+        response['Access-Control-Allow-Headers'] = 'Content-Type'
+        response['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+        return response
 
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = NewUser.objects.all()
     serializer_class = UserSerializer
 
+    def finalize_response(self, request, response, *args, **kwargs):
+        response['Access-Control-Allow-Origin'] = 'https://soul-talk2-1-pied.vercel.app'
+        response['Access-Control-Allow-Credentials'] = 'true'
+        response['Access-Control-Allow-Headers'] = 'Content-Type'
+        response['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+        return super().finalize_response(request, response, *args, **kwargs)
 

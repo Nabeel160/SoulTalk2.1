@@ -29,20 +29,25 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:3000']
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:3000', 'https://4abc-154-192-46-67.ngrok-free.app', 'https://soul-talk2-1-lovat.vercel.app']
 
 CSRF_COOKIE_NAME = 'csrftoken'
 
-CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SECURE = True  # If you are using HTTPS
+SESSION_COOKIE_SAMESITE = 'Lax'
 
-CORS_ORIGIN_WHITELIST = ( 'localhost:8080', 'localhost:8000', '127.0.0.1:8000', 'http://127.0.0.1:3000')
+CORS_ORIGIN_WHITELIST = ( 'localhost:8080', 'localhost:8000', '127.0.0.1:8000', 'http://127.0.0.1:3000',  'https://4abc-154-192-46-67.ngrok-free.app', 'https://soul-talk2-1-lovat.vercel.app',)
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost',
     'http://127.0.0.1',
     'http://0.0.0.0',
     'http://127.0.0.1:3000',
+    'https://4abc-154-192-46-67.ngrok-free.app',
+    'https://soul-talk2-1-lovat.vercel.app',
+
 
 ]
 CORS_ALLOW_ALL_ORIGINS = True
@@ -110,10 +115,11 @@ CHANNEL_LAYERS = {
 
 
 MIDDLEWARE = [
+
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',

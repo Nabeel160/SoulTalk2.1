@@ -112,7 +112,7 @@ function UserProfile() {
 
 
     const chat = (userId: any) => {
-        navigate(`/chat/${User.doctor[0].id}${userId}`)
+        navigate(`/chat/${User.doctor[0].id}-${userId}`)
     }
 
     const GoToProfile = () =>{
